@@ -4,7 +4,7 @@
 
 ## Thông tin nhóm
 
-- Tên nhóm:
+- Tên nhóm: NhomBVH
 - Candidate problem nhóm chọn (1 câu):
 - Quyết định cuối (Go / Not Yet / No-Go):
 
@@ -12,7 +12,7 @@
 
 | STT | Họ và tên | MSSV | Vai trò trong nhóm | Tài khoản GitHub |
 |---:|---|---|---|---|
-| 1 | | | | |
+| 1 | Vũ Xuân Hiếu | 2A202603860 | Thành viên nghiên cứu, Phản biện chính | vuhieuvh |
 | 2 | | | | |
 | 3 | | | | |
 | 4 | | | | |
@@ -37,20 +37,23 @@ Gợi ý vai trò (một người có thể giữ nhiều vai): điều phối t
 
 Mỗi thành viên thêm một mục theo mẫu dưới đây, tiêu đề là `HoVaTen-MSSV`.
 
-### HoVaTen-MSSV
+### VuXuanHieu-2A202603860
 
 **Phần việc phụ trách:**
 
--
+- Scan các bài toán ban đầu (CP1), soạn 3 Problem Cards (CP2) và pitch bài toán rà soát quy cách nộp bài cho nhóm.
+- Tham gia phản biện, đóng góp xây dựng cây OST và kịch bản phỏng vấn The Mom Test.
 
 **Đóng góp cụ thể** (mình đã làm gì, ra sản phẩm gì):
 
--
+- Đóng góp 10 bài toán scan thực tế đạt điều kiện Bonus B1.
+- Soạn thảo Problem Card và vẽ sơ đồ quy trình chi tiết cho bài toán rà soát quy cách nộp bài.
 
 **Bằng chứng** (phần nào trong `group_report.md`, file nào trong `report/assets/`, commit nào):
 
--
+- File cá nhân `report/individual/2A202603860_VuXuanHieu.md`
+- Bảng pitch và cây OST trong `report/team/group_report.md`
 
 **Điều mình học được từ phần nhóm:**
 
--
+- Nhận diện rõ ranh giới giữa một giải pháp công nghệ đơn thuần (Solution) và một cơ hội giải quyết nỗi đau có thật (Opportunity); biết cách dừng lại ở mức can thiệp đơn giản nhất đủ dùng thay vì phức tạp hóa bằng AI.
