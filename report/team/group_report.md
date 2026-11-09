@@ -247,6 +247,24 @@ graph TD
 
 ### 4.2. Quy trình tương lai
 
+Quy trình tương lai ưu tiên **Rule-based trước**, chỉ cân nhắc LLM đối với nội dung mà quy tắc cố định không thể đánh giá đáng tin cậy. Công cụ chỉ đọc và báo lỗi; sinh viên tự quyết định sửa file và tự thực hiện thao tác nộp bài.
+
+```mermaid
+graph TD
+    A["1. Sinh viên chạy lệnh kiểm tra trước khi nộp"] --> B["2. Rule checker kiểm tra tên repo, tên file, thư mục và file bắt buộc"]
+    B --> C{"Có lỗi cấu trúc hoặc nội dung template chưa thay?"}
+    C -- "Có" --> D["Hiển thị lỗi, file và vị trí cần kiểm tra"]
+    D --> E["Sinh viên tự sửa file"]
+    E --> A
+    C -- "Không" --> F["3. Hiển thị checklist kết quả kiểm tra Rule"]
+    F --> G{"Có trường cần đánh giá ngữ nghĩa?"}
+    G -- "Không" --> H["4. Sinh viên xem lại kết quả và tự quyết định nộp"]
+    G -- "Có, và đã bật kiểm tra bổ sung" --> I["LLM đối chiếu nội dung với rubric, chỉ đưa ra cảnh báo kèm căn cứ"]
+    I --> J["Sinh viên kiểm tra cảnh báo và tự sửa nếu cần"]
+    J --> H
+    H --> K["5. Sinh viên tự commit, push và nộp link LMS"]
+```
+
 | Bước | Actor / thành phần | Input | Output | Thời gian mục tiêu | Ghi chú |
 |---:|---|---|---|---|---|
 | 1 | Sinh viên | Repository bài làm và bộ hướng dẫn | Yêu cầu chạy kiểm tra | Dưới 1 phút thao tác | Chạy một lệnh CLI; không tự động sửa hoặc push |
