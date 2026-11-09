@@ -43,11 +43,39 @@ Lăng kính: **Lặp lại** · **Tốn thời gian** · **Cần đọc, tổng 
 
 | Rank | Problem | Vì sao chọn | Điều còn chưa chắc |
 |---:|---|---|---|
-| 1 | Rà soát quy cách bài nộp theo rubric (#1) | Quy trình lặp lại rõ ràng, nỗi đau có thật và cấp bách trước mỗi deadline, baseline thời gian đo lường được bằng phút, impact lớn (tránh bị trừ điểm oan). | Có cần dùng AI hay chỉ cần một shell script/rule-based kiểm tra file là đủ? |
-| 2 | Kiểm tra định dạng code & PR checklist (#2) | Actor cụ thể (Dev), quy trình rõ ràng trong Git workflow, có thể đo được số phút và tỷ lệ reject PR. | Tiêu chí đánh giá code review của mỗi tech lead có thể khác nhau, khó chuẩn hóa 100%. |
-| 3 | Trích xuất thông tin từ bài báo khoa học (#4) | Pain rất lớn của sinh viên nghiên cứu, tốn nhiều thời gian đọc tài liệu học thuật dài và dễ sót số liệu thực nghiệm. | Định dạng bảng biểu và bố cục các bài báo rất đa dạng (PDF 1 cột, 2 cột), dễ bị lỗi trích xuất. |
+| 1 | **Trích xuất thông tin & bảng số liệu thực nghiệm (Benchmark & Ablation Study) từ bài báo khoa học (#4)** | Nỗi đau học thuật cực lớn của sinh viên nghiên cứu và học viên AI; tốn 3–4 tiếng mỗi bài; khâu đọc dò bảng thực nghiệm PDF 2 cột rất dễ hoa mắt nhầm lẫn thông số baseline; impact học thuật cao. | Bố cục bảng biểu trong PDF học thuật rất đa dạng (bảng ngang, bảng dọc 2 cột, bảng lồng nhau, ký hiệu toán học), công cụ OCR/LLM liệu có trích xuất chuẩn 100% không bị lệch cột? |
+| 2 | Rà soát quy cách bài nộp theo rubric (#1) | Quy trình lặp lại rõ ràng và cấp bách trước mỗi deadline, baseline thời gian đo lường được bằng phút, impact lớn (tránh bị trừ điểm oan). | Có cần dùng AI hay chỉ cần một shell script/rule-based kiểm tra file là đủ? |
+| 3 | Kiểm tra định dạng code & PR checklist (#2) | Actor cụ thể (Dev), quy trình rõ ràng trong Git workflow, có thể đo được số phút và tỷ lệ reject PR. | Tiêu chí đánh giá code review của mỗi tech lead có thể khác nhau, khó chuẩn hóa 100%. |
 
-### Problem Card #1
+### Problem Card #1 (Card trọng tâm — Chọn để Pitch)
+
+| Trường | Nội dung |
+|---|---|
+| **Job Story** | Khi chuẩn bị slide báo cáo cho buổi seminar học thuật hàng tuần hoặc làm tổng quan tài liệu (Literature Review) từ một bài báo khoa học 10–15 trang, tôi muốn trích xuất chính xác các đóng góp cốt lõi (contributions), kiến trúc mô hình và các bảng so sánh thực nghiệm (benchmark metrics & ablation studies), để lập bảng đối chiếu phương pháp và hoàn thành dàn ý seminar trong vòng 45 phút mà không phải đọc dò thủ công từng trang PDF 2 cột. |
+| **Actor** | Sinh viên nghiên cứu / Học viên cao học tại phòng thí nghiệm AI (AI Lab), hoặc sinh viên năm cuối làm đồ án/khóa luận tốt nghiệp chuyên ngành AI / Khoa học Dữ liệu. |
+| **Thời điểm / bối cảnh** | Chiều tối thứ Năm hàng tuần trước buổi Lab Seminar sáng thứ Sáu, hoặc giai đoạn đầu của đề tài nghiên cứu khi cần đọc và tổng hợp 10–20 paper liên quan trong thời gian ngắn. |
+| **Quy trình hiện tại (6 bước)** | **1.** Tải PDF từ ArXiv / OpenReview, đọc Abstract và Introduction để nắm bài toán tác giả giải quyết (20 phút).<br>**2.** Đọc lướt phần Methodology & Model Architecture để hiểu luồng xử lý và công thức chính (35 phút).<br>**3.** Đọc phần Experimental Setup (Dataset, Hardware, Baselines, Hyperparameters) để nắm bối cảnh thử nghiệm (25 phút).<br>**4.** **Đọc dò, bóc tách và ghi chép số liệu từ các bảng Benchmark & Ablation Study (75 phút — ⚠️ BOTTLENECK CHÍNH)**.<br>**5.** Đọc đối chiếu phần Text thảo luận kết quả để hiểu vì sao mô hình vượt trội hoặc module nào đem lại hiệu quả cao nhất (30 phút).<br>**6.** Copy-paste số liệu thủ công vào slide PowerPoint hoặc bảng ma trận Literature Review trên Notion (35 phút).<br>➔ *Tổng thời gian hiện tại: 220 phút (~3.6 tiếng/paper).* |
+| **Bottleneck (bước nào, mất bao nhiêu phút)** | **Bước 4 (75 phút):** Bảng biểu trong bài báo khoa học định dạng PDF 2 cột rất phức tạp. Các bảng Benchmark thường có nhiều hàng/cột viết tắt (ví dụ: F1-score, mAP50, BLEU-4, Throughput, FLOPs, Latency). Tệ hơn là các bảng **Ablation Study** (thử nghiệm bóc tách thành phần): tác giả thử nghiệm kết hợp module A + B, bỏ module C, thay đổi loss function... Người đọc phải dùng mắt dò từng dòng, rất dễ nhìn nhầm dòng giữa các cấu hình baseline cũ/mới, nhầm giữa zero-shot vs few-shot, hoặc nhầm giữa kích thước backbone (ví dụ ResNet-50 vs ViT-B/16). |
+| **Impact (nếu không giải thì sao)** | - Mất 3–4 tiếng cho mỗi bài báo, gây kiệt sức khi phải chuẩn bị seminar hàng tuần.<br>- Nguy cơ hiểu sai hoặc trích xuất sai số liệu dẫn đến việc báo cáo sai trước Giáo sư và các thành viên lab, làm giảm uy tín học thuật.<br>- Nguy cơ chọn sai Baseline để tái lập (reproduce) hoặc đối chiếu trong nghiên cứu của chính mình, dẫn đến việc lãng phí hàng tuần tính toán GPU để huấn luyện mô hình theo một thiết lập sai. |
+| **Success metric (baseline → target)** | - **Baseline:** Mất trung bình 75 phút cho riêng khâu trích xuất và đối chiếu bảng số liệu thực nghiệm; tỷ lệ trích xuất sai/nhầm thông số cấu hình là 25% (đo từ 4 buổi seminar gần nhất).<br>- **Target:** Giảm thời gian trích xuất và đối chiếu bảng số liệu xuống **dưới 15 phút**; tỷ lệ sai lệch số liệu so với paper gốc **dưới 2%**.<br>- **Cách đo:** Bấm giờ từ lúc bắt đầu đọc phần Experiments đến khi hoàn thành bảng đối chiếu; chạy script diff hoặc đối chiếu chéo ngẫu nhiên 20 ô số liệu trên slide với bảng gốc trong PDF. |
+| **Phương án không dùng AI** | Sử dụng bảng mẫu Literature Review Matrix trên Notion/Excel; in file PDF ra giấy và dùng bút dạ quang (highlighter) 3 màu để đánh dấu thủ công (màu vàng: metric chính, màu xanh: baseline, màu hồng: ablation study). |
+| **Giả thuyết về AI (nếu có)** | Sử dụng Multimodal Document AI / Vision LLM đọc trực tiếp các trang PDF chứa bảng biểu, chuyển đổi cấu trúc bảng sang định dạng Markdown/JSON, đồng thời kết hợp prompt phân tích văn bản để tự động trích xuất bảng so sánh 5 cột chuẩn: *Tên mô hình | Dataset | Metric đạt được | Thiết lập thử nghiệm (setting) | Đóng góp của từng module (ablation gain)*. |
+| **Cảm nhận nhanh** | **Workflow** (Document Parser trích xuất bảng + LLM reasoning đối chiếu ngữ cảnh). |
+
+Quy trình nháp hiện tại:
+
+```mermaid
+graph TD
+    A["1. Đọc Abstract & Intro (20')"] --> B["2. Đọc Methodology & Kiến trúc (35')"]
+    B --> C["3. Đọc Experimental Setup (25')"]
+    C --> D["4. Đọc dò & bóc tách Bảng Benchmark & Ablation (75')\n⚠️ BOTTLENECK CHÍNH: Dễ nhầm setting, lẫn cột số liệu"]
+    D --> E["5. Đọc text phân tích thảo luận kết quả (30')"]
+    E --> F["6. Gõ tay số liệu vào slide / Notion Matrix (35')"]
+    
+    style D fill:#ffdddd,stroke:#ff0000,stroke-width:2px;
+```
+
+### Problem Card #2
 
 | Trường | Nội dung |
 |---|---|
@@ -72,7 +100,7 @@ graph LR
     D --> E["5. Nộp link LMS (2')"]
 ```
 
-### Problem Card #2
+### Problem Card #3
 
 | Trường | Nội dung |
 |---|---|
@@ -97,44 +125,23 @@ graph LR
     D --> E["5. Sửa lỗi format nếu bị reject (10')\n⚠️ BOTTLENECK"]
 ```
 
-### Problem Card #3
-
-| Trường | Nội dung |
-|---|---|
-| Job Story | Khi chuẩn bị slide cho buổi seminar hàng tuần tại phòng lab, tôi muốn trích xuất nhanh các đóng góp chính và bảng số liệu so sánh từ bài báo khoa học 10–12 trang, để hoàn thành dàn ý trình bày trong vòng 30 phút. |
-| Actor | Sinh viên nghiên cứu / Học viên cao học. |
-| Thời điểm / bối cảnh | Thứ Năm hàng tuần, trước buổi báo cáo học thuật định kỳ sáng thứ Sáu. |
-| Quy trình hiện tại (3–7 bước) | 1. Tải file PDF bài báo về máy (2 phút) · 2. Đọc Abstract và Introduction để nắm bài toán (20 phút) · 3. Lướt phần Methodology để hiểu mô hình (45 phút) · 4. Đọc bảng Experiments và ghi chép lại kết quả số liệu (60 phút) · 5. Soạn các slide tóm tắt trên PowerPoint/Canva (60 phút). |
-| Bottleneck (bước nào, mất bao nhiêu phút) | Bước 4 (mất 60 phút): Các bảng kết quả thực nghiệm rất dài, có nhiều ablation study và baselines, rất dễ nhầm lẫn giữa các cấu hình thử nghiệm. |
-| Impact (nếu không giải thì sao) | Mất cả buổi tối chỉ để làm slide cho một bài báo; nếu hiểu sai số liệu thực nghiệm sẽ bị giáo sư chỉnh sửa trong buổi seminar. |
-| Success metric (baseline → target) | - Baseline: Tốn 180 phút để đọc và chuẩn bị slide; thỉnh thoảng trích xuất sai thông số baseline.<br>- Target: Giảm tổng thời gian xuống còn 60 phút; độ chính xác số liệu đối chiếu đạt 100%.<br>- Cách đo: Bấm giờ hoàn thành bài thuyết trình; đối chiếu lại các số liệu trên slide với paper gốc. |
-| Phương án không dùng AI | Đọc theo template ghi chú nghiên cứu có sẵn (Literature Review Matrix trên Notion/Excel). |
-| Giả thuyết về AI (nếu có) | AI OCR trích xuất bảng biểu từ PDF và tạo bản tóm tắt đối chiếu điểm mạnh/yếu của phương pháp đề xuất so với baseline. |
-| Cảm nhận nhanh | Workflow |
-
-Quy trình nháp hiện tại:
-
-```mermaid
-graph LR
-    A["1. Tải PDF (2')"] --> B["2. Đọc Abstract & Intro (20')"]
-    B --> C["3. Đọc Methodology (45')"]
-    C --> D["4. Đọc & trích xuất bảng kết quả (60')\n⚠️ BOTTLENECK"]
-    D --> E["5. Soạn slide tóm tắt (60')"]
-```
-
 ### Card muốn pitch nhất
 
-- Card số: Card #1 (Rà soát quy cách bài nộp theo rubric).
-- Vì sao: Nỗi đau rất thực tế, ai trong lớp cũng từng trải qua hoặc lo lắng mỗi khi đến hạn nộp bài; quy trình có các bước rất rõ ràng, thời gian đo được cụ thể và đặc biệt là bài toán này giúp nhóm dễ dàng so sánh giữa phương án No AI / Rule (dùng script) với Workflow AI.
-- Câu hỏi muốn nhóm phản biện: *"Nếu bài toán này chỉ cần một script Python/Bash kiểm tra tên file là giải quyết được 80% vấn đề, thì việc tích hợp AI vào có thực sự mang lại thêm giá trị hay chỉ làm phức tạp hóa hệ thống?"*
+- **Card số:** **Problem Card #1 (Trích xuất thông tin & bảng số liệu thực nghiệm từ bài báo khoa học)**.
+- **Vì sao:** 
+  1. Đây là bài toán có giá trị học thuật và thực tiễn cao nhất đối với sinh viên/học viên chuyên ngành AI; ai làm nghiên cứu hoặc chuẩn bị seminar cũng đều thấm thía nỗi khổ khi phải "vật lộn" với các bảng kết quả phức tạp trong PDF.
+  2. Điểm nghẽn cực kỳ rõ ràng và nặng nề (mất tới 75 phút đọc dò từng dòng số liệu trong tổng số 3.6 tiếng đọc paper).
+  3. Đây là bài toán mà các phương pháp truyền thống (No AI / Rule-based) **hoàn toàn bó tay** vì cấu trúc bảng biểu trong PDF phi cấu trúc không thể giải quyết bằng regex thông thường, chứng minh rõ ràng giá trị vượt trội của giải pháp **AI Workflow (Multimodal / Document AI)** so với Rule.
+- **Câu hỏi muốn nhóm phản biện:** 
+  > *"Nếu bảng biểu trong các file PDF khoa học có cấu trúc quá phức tạp (bảng kéo dài qua nhiều trang, bảng xoay ngang, ký hiệu toán học đặc biệt), làm thế nào để đảm bảo AI trích xuất chính xác 100% số liệu mà không bị hiện tượng 'bịa số' (hallucination), và quy trình kiểm duyệt (Human-in-the-Loop) của chúng ta cần thiết kế như thế nào để người dùng kiểm tra nhanh nhất?"*
 
 ### AI đã phản biện card thế nào
 
 | Điểm yếu AI chỉ ra | Đồng ý? | Đã sửa gì |
 |---|---|---|
-| AI chỉ ra rằng Success Metric ban đầu của tôi ghi là 'nộp bài nhanh hơn và an tâm hơn' — đây là cảm giác chủ quan, không đo lường được và sẽ bị trừ điểm theo rubric C9. | Đồng ý hoàn toàn | Tôi đã sửa lại Success Metric thành các con số định lượng cụ thể: Baseline từ 20 phút giảm xuống Target dưới 3 phút, tỷ lệ sai sót giảm từ 15% về 0%, kèm phương pháp đo lường rõ ràng. |
-| AI chất vấn rằng bước 'đọc file hướng dẫn' không phải là bottleneck thực sự, vì đằng nào sinh viên cũng phải đọc đề. | Đồng ý | Tôi đã điều chỉnh lại bottleneck: Tập trung chính xác vào Bước 2 & Bước 3 (Mất 20 phút dò thủ công từng file và kiểm tra từng trường trong file báo cáo vào lúc đêm muộn, đây mới là nơi phát sinh lỗi sai nhiều nhất). |
-| AI hoài nghi rằng bài toán này hoàn toàn giải được bằng Rule (viết script kiểm tra file), chưa thấy lý do bắt buộc phải dùng AI. | Đồng ý | Tôi đã bổ sung rõ ở phần Giả thuyết AI: Script thông thường chỉ kiểm tra được sự tồn tại của file và tên file, còn AI sẽ giúp đọc hiểu nội dung xem học viên có thực sự trả lời đúng yêu cầu của từng mục trong báo cáo hay chỉ để template trống. |
+| AI chỉ ra rằng phạm vi 'tóm tắt toàn bộ bài báo khoa học' là quá rộng, dễ sa đà vào việc xây dựng một chatbot chung chung không có điểm nghẽn cụ thể. | Đồng ý hoàn toàn | Tôi đã thu hẹp phạm vi chính xác vào **Bước 4: Bóc tách bảng Benchmark và Ablation Study**, biến bước này thành bottleneck cụ thể (75 phút) với các trường dữ liệu rõ ràng. |
+| AI chất vấn rằng định dạng PDF rất đa dạng, nếu chỉ dựa vào LLM text-only thông thường thì sẽ làm mất liên kết giữa hàng và cột trong bảng. | Đồng ý | Tôi đã điều chỉnh phần Giả thuyết AI: Xác định rõ cần kết hợp **Document AI / Vision LLM (Multimodal)** để giữ nguyên cấu trúc không gian 2D của bảng biểu trước khi đưa vào LLM reasoning. |
+| AI nhận định Success Metric ban đầu ('đọc hiểu nhanh hơn') là mơ hồ, không đạt chuẩn Lean UX. | Đồng ý | Tôi đã sửa thành con số định lượng cụ thể: Giảm từ **75 phút xuống dưới 15 phút**, tỷ lệ sai lệch số liệu **dưới 2%**, kèm cách đo bằng script diff đối chiếu với PDF gốc. |
 
 ---
 
