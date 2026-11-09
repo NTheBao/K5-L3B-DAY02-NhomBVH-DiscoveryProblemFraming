@@ -1,4 +1,4 @@
-# Báo cáo cá nhân — MSSV_HoTen
+# Báo cáo cá nhân — 2A202603860_VuXuanHieu
 
 > Đổi tên file theo quy tắc `MSSV_HoTen.md`, ví dụ `20241234_NguyenVanAn.md` (MSSV trước, dấu `_`, họ tên viết liền không dấu). Sửa cả dòng tiêu đề phía trên cho khớp.
 > Template chi tiết và prompt mẫu cho từng mục: [docs/01-worksheet.md](../../docs/01-worksheet.md).
@@ -6,11 +6,11 @@
 
 ## 1. Thông tin học viên
 
-- Họ tên:
-- MSSV:
-- Email trường (không bắt buộc, repo có thể để public):
-- Tên nhóm:
-- Link repo nhóm:
+- Họ tên: Vũ Xuân Hiếu
+- MSSV: 2A202603860
+- Email trường (không bắt buộc, repo có thể để public): 26ai.hieuvx2@vinuni.edu.vn
+- Tên nhóm: NhomBVH
+- Link repo nhóm: https://github.com/NTheBao/K5-L3B-DAY02-NhomBVH-DiscoveryProblemFraming
 
 ---
 
@@ -43,7 +43,7 @@ Lăng kính: **Lặp lại** · **Tốn thời gian** · **Cần đọc, tổng 
 
 | Rank | Problem | Vì sao chọn | Điều còn chưa chắc |
 |---:|---|---|---|
-| 1 | **Trích xuất thông tin & bảng số liệu thực nghiệm (Benchmark & Ablation Study) từ bài báo khoa học (#4)** | Nỗi đau học thuật cực lớn của sinh viên nghiên cứu và học viên AI; tốn 3–4 tiếng mỗi bài; khâu đọc dò bảng thực nghiệm PDF 2 cột rất dễ hoa mắt nhầm lẫn thông số baseline; impact học thuật cao. | Bố cục bảng biểu trong PDF học thuật rất đa dạng (bảng ngang, bảng dọc 2 cột, bảng lồng nhau, ký hiệu toán học), công cụ OCR/LLM liệu có trích xuất chuẩn 100% không bị lệch cột? |
+| 1 | Trích xuất thông tin & bảng số liệu thực nghiệm (Benchmark & Ablation Study) từ bài báo khoa học (#4) | Nỗi đau học thuật cực lớn của sinh viên nghiên cứu và học viên AI; tốn 3–4 tiếng mỗi bài; khâu đọc dò bảng thực nghiệm PDF 2 cột rất dễ hoa mắt nhầm lẫn thông số baseline; impact học thuật cao. | Bố cục bảng biểu trong PDF học thuật rất đa dạng (bảng ngang, bảng dọc 2 cột, bảng lồng nhau, ký hiệu toán học), công cụ OCR/LLM liệu có trích xuất chuẩn 100% không bị lệch cột? |
 | 2 | Rà soát quy cách bài nộp theo rubric (#1) | Quy trình lặp lại rõ ràng và cấp bách trước mỗi deadline, baseline thời gian đo lường được bằng phút, impact lớn (tránh bị trừ điểm oan). | Có cần dùng AI hay chỉ cần một shell script/rule-based kiểm tra file là đủ? |
 | 3 | Kiểm tra định dạng code & PR checklist (#2) | Actor cụ thể (Dev), quy trình rõ ràng trong Git workflow, có thể đo được số phút và tỷ lệ reject PR. | Tiêu chí đánh giá code review của mỗi tech lead có thể khác nhau, khó chuẩn hóa 100%. |
 
@@ -57,7 +57,7 @@ Lăng kính: **Lặp lại** · **Tốn thời gian** · **Cần đọc, tổng 
 | **Quy trình hiện tại (6 bước)** | **1.** Tải PDF từ ArXiv / OpenReview, đọc Abstract và Introduction để nắm bài toán tác giả giải quyết (20 phút).<br>**2.** Đọc lướt phần Methodology & Model Architecture để hiểu luồng xử lý và công thức chính (35 phút).<br>**3.** Đọc phần Experimental Setup (Dataset, Hardware, Baselines, Hyperparameters) để nắm bối cảnh thử nghiệm (25 phút).<br>**4.** **Đọc dò, bóc tách và ghi chép số liệu từ các bảng Benchmark & Ablation Study (75 phút — ⚠️ BOTTLENECK CHÍNH)**.<br>**5.** Đọc đối chiếu phần Text thảo luận kết quả để hiểu vì sao mô hình vượt trội hoặc module nào đem lại hiệu quả cao nhất (30 phút).<br>**6.** Copy-paste số liệu thủ công vào slide PowerPoint hoặc bảng ma trận Literature Review trên Notion (35 phút).<br>➔ *Tổng thời gian hiện tại: 220 phút (~3.6 tiếng/paper).* |
 | **Bottleneck (bước nào, mất bao nhiêu phút)** | **Bước 4 (75 phút):** Bảng biểu trong bài báo khoa học định dạng PDF 2 cột rất phức tạp. Các bảng Benchmark thường có nhiều hàng/cột viết tắt (ví dụ: F1-score, mAP50, BLEU-4, Throughput, FLOPs, Latency). Tệ hơn là các bảng **Ablation Study** (thử nghiệm bóc tách thành phần): tác giả thử nghiệm kết hợp module A + B, bỏ module C, thay đổi loss function... Người đọc phải dùng mắt dò từng dòng, rất dễ nhìn nhầm dòng giữa các cấu hình baseline cũ/mới, nhầm giữa zero-shot vs few-shot, hoặc nhầm giữa kích thước backbone (ví dụ ResNet-50 vs ViT-B/16). |
 | **Impact (nếu không giải thì sao)** | - Mất 3–4 tiếng cho mỗi bài báo, gây kiệt sức khi phải chuẩn bị seminar hàng tuần.<br>- Nguy cơ hiểu sai hoặc trích xuất sai số liệu dẫn đến việc báo cáo sai trước Giáo sư và các thành viên lab, làm giảm uy tín học thuật.<br>- Nguy cơ chọn sai Baseline để tái lập (reproduce) hoặc đối chiếu trong nghiên cứu của chính mình, dẫn đến việc lãng phí hàng tuần tính toán GPU để huấn luyện mô hình theo một thiết lập sai. |
-| **Success metric (baseline → target)** | - **Baseline:** Mất trung bình 75 phút cho riêng khâu trích xuất và đối chiếu bảng số liệu thực nghiệm; tỷ lệ trích xuất sai/nhầm thông số cấu hình là 25% (đo từ 4 buổi seminar gần nhất).<br>- **Target:** Giảm thời gian trích xuất và đối chiếu bảng số liệu xuống **dưới 15 phút**; tỷ lệ sai lệch số liệu so với paper gốc **dưới 2%**.<br>- **Cách đo:** Bấm giờ từ lúc bắt đầu đọc phần Experiments đến khi hoàn thành bảng đối chiếu; chạy script diff hoặc đối chiếu chéo ngẫu nhiên 20 ô số liệu trên slide với bảng gốc trong PDF. |
+| **Success metric (baseline → target)** | - **Baseline:** Mất trung bình 75 phút cho riêng khâu trích xuất và đối chiếu bảng số liệu thực nghiệm; tỷ lệ trích xuất sai/nhầm thông số cấu hình là 25% (đo từ 4 buổi seminar gần nhất).<br>- **Target:** Giảm thời gian trích xuất và đối chiếu bảng số liệu xuống **dưới 15 phút**; tỷ lệ sai lệch số liệu so với paper gốc **dưới 2%**.<br>- **Cách đo:** Bấm giờ từ lúc bắt đầu đọc phần Experiments đến khi hoàn thành bảng đối chiếu; đối chiếu ngẫu nhiên 20 ô số liệu trên bảng trích xuất với ảnh cắt bảng gốc (bounding box crop) từ PDF. |
 | **Phương án không dùng AI** | Sử dụng bảng mẫu Literature Review Matrix trên Notion/Excel; in file PDF ra giấy và dùng bút dạ quang (highlighter) 3 màu để đánh dấu thủ công (màu vàng: metric chính, màu xanh: baseline, màu hồng: ablation study). |
 | **Giả thuyết về AI (nếu có)** | Sử dụng Multimodal Document AI / Vision LLM đọc trực tiếp các trang PDF chứa bảng biểu, chuyển đổi cấu trúc bảng sang định dạng Markdown/JSON, đồng thời kết hợp prompt phân tích văn bản để tự động trích xuất bảng so sánh 5 cột chuẩn: *Tên mô hình | Dataset | Metric đạt được | Thiết lập thử nghiệm (setting) | Đóng góp của từng module (ablation gain)*. |
 | **Cảm nhận nhanh** | **Workflow** (Document Parser trích xuất bảng + LLM reasoning đối chiếu ngữ cảnh). |
@@ -141,7 +141,7 @@ graph LR
 |---|---|---|
 | AI chỉ ra rằng phạm vi 'tóm tắt toàn bộ bài báo khoa học' là quá rộng, dễ sa đà vào việc xây dựng một chatbot chung chung không có điểm nghẽn cụ thể. | Đồng ý hoàn toàn | Tôi đã thu hẹp phạm vi chính xác vào **Bước 4: Bóc tách bảng Benchmark và Ablation Study**, biến bước này thành bottleneck cụ thể (75 phút) với các trường dữ liệu rõ ràng. |
 | AI chất vấn rằng định dạng PDF rất đa dạng, nếu chỉ dựa vào LLM text-only thông thường thì sẽ làm mất liên kết giữa hàng và cột trong bảng. | Đồng ý | Tôi đã điều chỉnh phần Giả thuyết AI: Xác định rõ cần kết hợp **Document AI / Vision LLM (Multimodal)** để giữ nguyên cấu trúc không gian 2D của bảng biểu trước khi đưa vào LLM reasoning. |
-| AI nhận định Success Metric ban đầu ('đọc hiểu nhanh hơn') là mơ hồ, không đạt chuẩn Lean UX. | Đồng ý | Tôi đã sửa thành con số định lượng cụ thể: Giảm từ **75 phút xuống dưới 15 phút**, tỷ lệ sai lệch số liệu **dưới 2%**, kèm cách đo bằng script diff đối chiếu với PDF gốc. |
+| AI cảnh báo rủi ro 'bịa số' (Hallucination): LLM rất dễ nhầm lẫn hoặc tự suy diễn các con số ở các cột gần nhau trong bảng PDF phức tạp, nếu người dùng tin tưởng hoàn toàn sẽ dẫn đến báo cáo sai kết quả trước Giáo sư. | Đồng ý hoàn toàn | Tôi đã bổ sung cơ chế kiểm duyệt Human-in-the-Loop (HITL) bắt buộc vào giải pháp: AI không chỉ trích xuất số liệu thành bảng Markdown mà phải hiển thị song song ảnh cắt (bounding box crop) của bảng gốc trong PDF, giúp người đọc đối chiếu bằng mắt từng con số chỉ trong 1–2 phút trước khi copy sang slide. |
 
 ---
 
