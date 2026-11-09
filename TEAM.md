@@ -12,7 +12,7 @@
 
 | STT | Họ và tên | MSSV | Vai trò trong nhóm | Tài khoản GitHub |
 |---:|---|---|---|---|
-| 1 | Nguyễn Thế Bảo | 2A202603848 | Trưởng nhóm, Điều phối thời gian | NTheBao |
+| 1 | Nguyễn Thế Bảo | 2A202603825 | Trưởng nhóm, Điều phối thời gian | NTheBao |
 | 2 | Phạm Đức Vinh | 2A202603849 | Thành viên nghiên cứu, Phụ trách kiểm chứng | vindpd203 |
 | 3 | Vũ Xuân Hiếu | 2A202603860 | Thành viên nghiên cứu, Phản biện chính | vuhieuvh |
 
@@ -79,3 +79,26 @@ Mỗi thành viên thêm một mục theo mẫu dưới đây, tiêu đề là `
 **Điều mình học được từ phần nhóm:**
 
 - Card viết kỹ nhất chưa chắc là card nên chọn: tiêu chí "kiểm chứng được ngay" và "nhóm hiểu domain" quan trọng hơn ở giai đoạn Define. Kết quả eval phải chạy thật mới tin được — bản ghi "Đạt" viết sẵn đã che mất hai ca báo nhầm.
+
+### NguyenTheBao-2A202603825
+
+**Phần việc phụ trách:**
+
+- Trưởng nhóm, điều phối thời gian; hỗ trợ CP3, phụ trách research CP4, hỗ trợ quy trình CP5, viết Problem Statement v0 và phụ trách quyết định CP6.
+- Pitch 3 Problem Card về theo dõi yêu cầu thay đổi, đối chiếu tài liệu yêu cầu và bug report thiếu thông tin.
+
+**Đóng góp cụ thể** (mình đã làm gì, ra sản phẩm gì):
+
+- Ở CP3, đặt câu hỏi về bằng chứng của candidate paper và tính cần thiết của AI cho kiểm tra quy cách; góp phần giúp nhóm phân biệt phần kiểm tra bằng Rule với phần có thể cần đọc hiểu ngữ nghĩa.
+- Ở CP4, tổng hợp research về pre-commit, GitHub Classroom Autograding, Gradescope và markdownlint-cli; rút ra kết luận các bước kiểm tra cấu trúc phần lớn làm được bằng Rule.
+- Ở CP5, hỗ trợ hoàn thiện quy trình trước/sau và viết Problem Statement v0; làm rõ metric, boundary read-only và Rule là phương án mặc định.
+- Ở CP6, đánh giá bốn rủi ro và đề xuất Go phạm vi nhỏ, pilot 2 bài lab cùng các ngưỡng dừng cho LLM và Rule checker.
+
+**Bằng chứng** (phần nào trong `group_report.md`, file nào trong `report/assets/`, commit nào):
+
+- File cá nhân `report/individual/2A202603825_NguyenTheBao.md` 
+- Nguồn research và liên kết được tổng hợp tại  `report/team/group_report.md`.
+
+**Điều mình học được từ phần nhóm:**
+
+- Không nên chọn AI trước khi xác định pain và bằng chứng. Nhiều lỗi quy cách có thể xử lý bằng Rule; vì vậy cần bắt đầu từ mức đơn giản nhất, giữ công cụ read-only và chỉ cân nhắc LLM cho phần Rule không đánh giá được. Các con số chưa có nguồn phải được ghi là giả định và kiểm chứng trước khi dùng làm kết luận.
