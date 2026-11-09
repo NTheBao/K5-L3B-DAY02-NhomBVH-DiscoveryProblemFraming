@@ -149,16 +149,16 @@ graph LR
 
 | Hoạt động | Tôi đã làm gì? | Kết quả / ảnh hưởng tới bài nhóm |
 |---|---|---|
-| Pitch Problem Card | | |
-| Phản biện bài của bạn khác | Câu hỏi tôi đã đặt: | |
-| Nhận phản biện | Câu hỏi tôi nhận được: | Tôi đã sửa gì: |
-| Gom cluster / cây OST | | |
-| Chọn candidate problem | | |
-| Kiểm chứng / research | | |
-| Quy trình nhóm | | |
-| Problem Statement | | |
-| Mức can thiệp AI | | |
-| Quyết định | | |
+| Pitch Problem Card | Pitch 3 card: #1 rà soát quy cách bài nộp theo rubric, #2 PR checklist, #3 trích xuất bảng benchmark/ablation từ paper (card muốn pitch nhất ban đầu). | Card #1 đạt điểm cao nhất (31/35) và được nhóm chọn làm candidate problem chính thức; #2 và #3 bị loại có lập luận rõ ràng. |
+| Phản biện bài của bạn khác | Câu hỏi tôi đã đặt:<br>- Hỏi Vinh (#4): *"Số liệu 6 MST và 14 hóa đơn sót là thật hay giả định? Nếu XLOOKUP là đủ thì bài còn đáng đào sâu không?"*<br>- Hỏi Vinh (#6): *"Bao nhiêu % nhà cung cấp lặp lại hằng tháng? Nếu cao thì chỉ cần tra nhà cung cấp mới."*<br>- Hỏi Bảo (#8): *"Word Compare đã làm được việc này, AI thêm được gì? Tài liệu khách hàng có được phép đưa lên AI không?"* | - Câu hỏi cho #4 làm rõ số liệu chỉ là giả định minh họa (Pain 3/5), là căn cứ quan trọng để nhóm loại #4.<br>- Gợi ý cho #6 giúp ghi nhận giải pháp bằng danh sách nhà cung cấp đã tra.<br>- Câu hỏi cho #8 giúp nhóm nhận diện rủi ro bảo mật tài liệu khách hàng và loại card #8. |
+| Nhận phản biện | Câu hỏi tôi nhận được:<br>- Bảo hỏi (#1): *"Viết shell script hay Python regex là kiểm tra được, sao cần AI?"*<br>- Vinh hỏi (#1): *"Con số 6 bạn bị trừ điểm ở Day 01 lấy từ đâu, có bảng điểm không?"*<br>- Vinh hỏi (#2): *"Pre-commit hook với Flake8/Black đã chặn được lỗi format, phần còn lại là gì?"*<br>- Bảo hỏi (#3): *"Tỷ lệ sai 25% đo từ 4 buổi seminar, mẫu có quá nhỏ không? Kiểm chứng trong một buổi lab bằng cách nào?"* | **Tôi đã sửa gì:**<br>- Tiếp thu phản biện của Bảo: chấp nhận kiến trúc Rule-based làm mặc định ở Tầng 1 (quét file/folder/chuỗi mẫu), AI chỉ can thiệp ở Tầng 2 để phân tích ngữ nghĩa nội dung các trường bắt buộc.<br>- Đưa nghi vấn của Vinh vào Assumption Map CP4 để kiểm chứng: TA xác nhận có đúng 6/30 bài Day 01 sai tên file.<br>- Loại bỏ con số "sót lỗi 15%" không có nguồn và bỏ target tuyệt đối "0% lỗi", thay bằng target pilot thực tế $\le$ 1/30 bài. |
+| Gom cluster / cây OST | Người chính CP3 (theo `TEAM.md`): chủ trì thảo luận gom 9 problem thành 4 cụm (A, B, C, D); dựng cây OST xuất phát từ 1 outcome đo được (giảm số lần sản phẩm bị trả về/bị trừ điểm) và 4 opportunity nhánh; cùng nhóm gạch bỏ các giải pháp đội lốt nhu cầu; lập bảng chấm shortlist 7 tiêu chí. | Phân loại rõ ràng 4 cụm vấn đề, giúp nhóm không bị sa đà vào công cụ (gạch bỏ bot Discord, trợ lý LLM...); shortlist được 3 card mạnh nhất với điểm số minh bạch. |
+| Chọn candidate problem | Đề xuất chọn Candidate #1 vì: có sự kiện thật kiểm chứng được ngay trong lớp (Day 01), cả nhóm hiểu rõ domain nộp bài, và bài toán buộc nhóm so sánh đủ 4 mức can thiệp (Rule vs Workflow). Cùng nhóm phân tích lý do loại #4, #9, #2, #3, #5–#8. | Nhóm đạt đồng thuận 100% chọn Candidate #1 với 31/35 điểm; văn bản hóa đầy đủ lý do chọn và lý do loại trong Mục 2.4 của báo cáo nhóm. |
+| Kiểm chứng / research | Người hỗ trợ kiểm chứng CP4 (theo `TEAM.md`): cùng Vinh xây dựng Assumption Map (6 giả định) và kịch bản phỏng vấn The Mom Test (`report/assets/cp4-interview-script.md`); trực tiếp thực hiện phỏng vấn Interview Snapshot 1 (sinh viên năm 3 bị trừ 5 điểm vì nhầm `_` thành `-`) và Interview Snapshot 3 (nhóm trưởng bị thành viên nộp template rỗng). | Thu thập được bằng chứng sống động về nỗi đau format sát deadline và nhu cầu kiểm tra template rỗng; xác định rõ ranh giới sản phẩm là Augment/Read-only chứ không tự động sửa file. |
+| Quy trình nhóm | Người chính CP5 quy trình trước/sau (theo `TEAM.md`): vẽ sơ đồ quy trình hiện tại (6 bước, 40 phút, bottleneck 20 phút); thiết kế sơ đồ quy trình tương lai 2 tầng (Tầng 1 Rule Engine chạy vài giây, Tầng 2 LLM Validator tùy chọn dưới 15 giây, có bước HITL sinh viên tự duyệt) và lập bảng so sánh Before/After. | Hoàn thiện Mục 4 trong `group_report.md` với sơ đồ Mermaid trực quan, có cơ chế Fallback offline khi mạng lag sát 23h59 và ranh giới HITL an toàn cho sinh viên. |
+| Problem Statement | Hỗ trợ Bảo hoàn thiện Problem Statement v0 (CP5); chủ trì soạn thảo Problem Statement v1 (CP6) với đầy đủ các trường: Actor, Quy trình 2 tầng, Bottleneck, Metric đo lường thực tế, Boundary read-only, AI intervention point và bảng đối chiếu thay đổi v0 vs v1. | Problem Statement v1 thể hiện rõ sự trưởng thành từ số liệu giả định sang số liệu kiểm chứng; xác định chính xác điểm can thiệp hẹp của AI ở bước phân tích ngữ nghĩa. |
+| Mức can thiệp AI | Người chính CP6 (theo `TEAM.md`): định vị bài toán trên ma trận Độ mơ hồ thấp × Độ phức tạp trung bình; lập bảng so sánh 4 mức (No AI, Rule, Workflow, Agent); xây dựng AI Canvas rút gọn (6 thành phần); phân tích 2 câu hỏi Google PAIR (chọn Augment và High Recall); thiết kế bộ dữ liệu Eval mẫu gồm 10 Test Cases (TC-01 đến TC-10). | Quyết định chọn mức Workflow bán tự động được chứng minh chặt chẽ tại Mục 6; bộ 10 test case eval giúp nhóm đạt trọn vẹn điểm thưởng **Bonus B3 (+3 điểm)**. |
+| Quyết định | Người hỗ trợ phần quyết định (theo `TEAM.md`): cùng Bảo phân tích 4 Big Risks (Value, Usability, Feasibility, Viability); thống nhất quyết định GO ở phạm vi pilot nhỏ và thiết lập ngưỡng dừng (Stop condition) định lượng. | Nhóm có quyết định GO thuyết phục tại Mục 8 kèm kế hoạch thử nghiệm pilot ở Day 03 và ngưỡng dừng an toàn (nếu False Positive > 20% hoặc thời gian > 10 phút sau 2 bài lab thì dừng dự án và quay về No AI checklist Excel). |
 
 ---
 
@@ -166,12 +166,12 @@ graph LR
 
 | Checkpoint | Tôi dùng AI để làm gì? | AI hữu ích ở đâu? | AI sai hoặc hời hợt ở đâu? | Tôi sửa gì bằng nhận định của mình? |
 |---|---|---|---|---|
-| CP1 Scan | | | | |
-| CP2 Problem Card | | | | |
-| CP4 Research | | | | |
-| CP5 Quy trình | | | | |
-| CP5–6 Problem Statement | | | | |
-| CP6 Mức can thiệp / quyết định | | | | |
+| CP1 Scan | Sau khi tự scan được 8 problem từ trải nghiệm thực tế, tôi dùng AI gợi ý thêm góc nhìn cho lăng kính "Lặp lại" và "Tốn thời gian". | Gợi ý thêm các khía cạnh quản lý công việc và báo cáo định kỳ trong tuần. | AI đề xuất các ý tưởng rất sáo rỗng và "solution-first" như *"Trợ lý AI tự động quản lý toàn diện lịch trình học tập"* (ý tưởng chung chung, không có bối cảnh hay nỗi đau đo được). | Tôi loại bỏ hoàn toàn các ý tưởng mơ hồ của AI; chỉ giữ lại 2 ý tưởng thực tế (#9 tổng hợp Git commit và #10 trích xuất hóa đơn), tự viết lại theo Job Story và tự điền baseline thời gian thực tế. |
+| CP2 Problem Card | Đóng vai Product Manager khó tính (Skeptical PM) để phản biện bản nháp Problem Card #1 và #2 của tôi. | Nhắc nhở phạm vi ban đầu của Card #1 ("tóm tắt toàn bộ paper") quá rộng; cảnh báo nguy cơ AI bịa số (hallucination) trong bảng thực nghiệm. | AI vội vàng khuyên nên xây dựng một "Hệ thống AI Multi-agent" để tự động sửa toàn bộ bài làm của sinh viên, lờ đi rủi ro sinh viên bị mất quyền kiểm soát bài nộp. | Tôi bác bỏ giải pháp Agent của AI; chủ động thu hẹp ranh giới (Boundary) xuống mức công cụ chỉ đọc và báo lỗi (read-only), giữ nguyên tắc Human-in-the-Loop (HITL) bắt buộc để người dùng tự tay sửa file. |
+| CP4 Research | Tra cứu các công cụ mã nguồn mở hiện có trên thị trường có khả năng kiểm tra định dạng và cấu trúc repository Git. | Liệt kê nhanh các công cụ phổ biến như `pre-commit`, `markdownlint`, `Flake8`. | AI đưa ra một số link tài liệu đã cũ; nhận định phiến diện rằng *"pre-commit đã giải quyết được 100% bài toán quy cách"*. | Tôi tự tay mở từng link trên trình duyệt để kiểm chứng ngày 09/11/2026; tự phân tích khoảng trống mà `pre-commit` không giải được: không thể đọc hiểu ngữ nghĩa xem nội dung mục bắt buộc có bị bỏ trống hay để nguyên template mẫu hay không. |
+| CP5 Quy trình | Chuyển đổi bản nháp quy trình thành cú pháp Mermaid Markdown để hiển thị sơ đồ trực quan. | Hỗ trợ sinh nhanh cú pháp sơ đồ Mermaid `graph TD` chuẩn xác, không bị lỗi render. | Sơ đồ AI tự vẽ ban đầu đã gộp thẳng bước kiểm tra cấu trúc với bước nộp bài tự động lên LMS thành 1 luồng khép kín không có con người can thiệp (Full Automation). | Tôi tự vẽ lại quy trình: tách rõ khâu Tầng 1 (Rule checker kiểm tra file) và Tầng 2 (LLM cảnh báo ngữ nghĩa); bổ sung nhánh rẽ bắt buộc con người tự duyệt và tự thao tác commit/push/nộp LMS. |
+| CP5–6 Problem Statement | Kiểm tra xem bản nháp Problem Statement v0 và v1 đã đầy đủ các trường theo Lean UX Canvas và Google PAIR chưa. | Rà soát đối chiếu danh mục các trường bắt buộc (Actor, Bottleneck, Metric, Boundary, AI intervention point). | AI tự ý điền các metric rất bay bổng và vô căn cứ như *"tiết kiệm 99% thời gian"*, *"đạt độ chính xác 100% tuyệt đối"*, *"giảm 0% lỗi"*. | Tôi gạch bỏ toàn bộ các con số phóng đại của AI; thay bằng số liệu thực tế đo được từ buổi phỏng vấn CP4 (baseline: 6/30 bài Day 01 sai format; target pilot thực tế $\le$ 1/30 bài; thời gian rà soát từ 15–35 phút giảm xuống dưới 5 phút). |
+| CP6 Mức can thiệp / quyết định | Thử phản biện xem nếu giải bài toán này bằng Agent tự hành thì có ưu thế gì hơn Workflow bán tự động không. | Liệt kê các kịch bản bất định mà Agent có thể xử lý. | AI có xu hướng "thần thánh hóa" Agent, cổ xúy cho việc dùng Agent để tự động sửa file và tự push code nhằm tạo cảm giác "công nghệ cao". | Tôi giữ vững lập trường của nhóm: quy trình nộp bài là luồng tuần tự cố định (deterministic), dùng Agent là lãng phí và nguy hiểm. Tôi quyết định chốt phương án **Workflow bán tự động** (Rule-based trước, LLM chỉ làm bước hẹp đọc hiểu ngữ nghĩa), có Fallback offline an toàn khi mất mạng. |
 
 ---
 
@@ -181,20 +181,70 @@ Trả lời bằng trải nghiệm thật của bạn, tối thiểu 200 từ ch
 
 **6.1. Tôi học được gì khi nghe top 3 problems của các bạn khác?**
 
+Khi lắng nghe bài pitch của Phạm Đức Vinh (về đối chiếu hóa đơn cổng thuế với phần mềm kế toán) và Nguyễn Thế Bảo (về quản lý thay đổi yêu cầu từ khách hàng và bổ sung thông tin bug report từ Tester), tôi học được hai bài học lớn:
+- Thứ nhất, một bài toán nhìn từ bên ngoài có vẻ rất chuyên nghiệp và phức tạp (như bài hóa đơn thuế của Vinh với 6 MST và 14 hóa đơn sót) chưa hẳn đã là bài toán phù hợp nhất để làm product discovery trong môi trường học tập, nếu nhóm không thể tiếp cận được người dùng thực (kế toán dịch vụ thật) ngay trong buổi lab để kiểm chứng.
+- Thứ hai, việc các bạn phân tích quy trình giúp tôi nhận ra rằng hầu hết các điểm nghẽn thực tế đều xuất phát từ việc con người phải đối chiếu hai nguồn thông tin bằng mắt (bảng này so với bảng kia, tài liệu cũ so với tài liệu mới). Điều này giúp tôi nhìn nhận lại card của chính mình: không phải cứ đề tài to tát mới có giá trị, mà bài toán giải quyết đúng nỗi đau sát sườn mà cả 3 thành viên đều hiểu sâu và kiểm chứng được ngay tại lớp mới là bài toán có sức thuyết phục cao nhất.
+
 **6.2. Nhóm có lúc nào bị "solution-first" (nghĩ giải pháp trước khi hiểu vấn đề) không? Lúc đó nhóm nhận ra và xử lý thế nào?**
+
+Nhóm tôi đã bị "solution-first" ngay từ những phút đầu tiên của CP3. Khi tôi vừa đưa ra vấn đề sinh viên bị trừ điểm vì sai quy cách bài nộp, phản xạ đầu tiên của cả nhóm là lập tức bàn về giải pháp công nghệ: Thế Bảo đề xuất viết một con bot Discord tự chạy script kiểm tra bài nộp, tôi thì hào hứng nghĩ đến việc dùng một prompt LLM để đọc rubric rồi tự động sinh ra file checklist, còn Vinh thì nghĩ đến việc tích hợp thẳng vào GitHub Actions để tự sửa bài.
+Nhóm chỉ giật mình nhận ra sai lầm khi cùng nhau vẽ cây Opportunity Solution Tree (OST) theo hướng dẫn của Teresa Torres. Khi nhìn vào quy tắc yêu cầu các nhánh con của outcome bắt buộc phải là "Opportunity" (nhu cầu, nỗi đau của người dùng) chứ không được là "Solution" (tính năng, công cụ), nhóm mới nhận ra rằng "Bot Discord" hay "LLM" đều chỉ là cái vỏ giải pháp đội lốt. Nỗi đau thực sự của sinh viên là: *sát giờ nộp 23h59 thì mệt mỏi, hoa mắt nên dễ gõ nhầm dấu gạch dưới thành gạch ngang, và rubric quá dài nên không nhớ hết các trường bắt buộc*. Nhóm đã lập tức gạch bỏ 4 giải pháp công nghệ đó ra khỏi cây OST và chỉ tập trung vào việc làm rõ hành vi rà soát thủ công của sinh viên.
 
 **6.3. Tôi có đổi ý sau khi bị phản biện không? Kể một lần cụ thể.**
 
+Có, tôi đã đổi ý rất dứt khoát ở CP3 khi nghe câu hỏi phản biện của Thế Bảo.
+Ban đầu, tôi rất hào hứng và ra sức bảo vệ phương án dùng AI để "đọc hiểu toàn diện bài nộp của sinh viên". Nhưng Bảo đã chất vấn thẳng: *"Nếu chỉ là kiểm tra xem repo có đúng tên không, file cá nhân có đúng định dạng MSSV_HoTen.md không, và các thư mục bắt buộc có tồn tại không, thì một script Python regex hoặc Bash script chạy 1 giây là xong, cớ sao lại phải lôi AI vào cho tốn tiền và chậm chạp?"*.
+Câu hỏi này đã "chạm đúng huyệt". Lúc đầu tôi hơi ngượng vì thấy mình bị bẫy "lạm dụng AI", nhưng sau khi cùng nhóm phân tích sâu, tôi hoàn toàn đồng ý và đổi ý: tôi chấp nhận rằng phần lớn cấu trúc bài nộp (phần vỏ) bắt buộc phải do Rule-based xử lý để đảm bảo độ chính xác 100% và tốc độ tức thì; AI chỉ được phép can thiệp ở một bước rất hẹp (Tầng 2) là đọc hiểu ngữ nghĩa để phát hiện xem các mục bắt buộc như Success Metric có bị điền qua loa hoặc để nguyên template rỗng hay không. Sự đổi ý này đã cứu giải pháp của nhóm khỏi cái bẫy "over-engineering".
+
 **6.4. Kết quả kiểm chứng (phỏng vấn/survey/research) có làm tôi bất ngờ không? Điều gì?**
+
+Điều làm tôi bất ngờ nhất đến từ buổi phỏng vấn Trợ giảng (TA) ở CP4.
+Trước khi phỏng vấn, nhóm tôi cứ đinh ninh rằng việc kiểm tra quy cách bài nộp là một công việc rất phức tạp mà các thầy cô phải đọc từng file bằng tay nên rất cần AI hỗ trợ chấm. Nhưng khi hỏi TA, anh chia sẻ nguyên văn rằng: các anh đã có sẵn bash script để chấm tự động theo quy tắc cố định; bài nào sinh viên gõ sai tên file là script báo lỗi đỏ và gán điểm 0 phần format ngay lập tức.
+Tín hiệu phản bác này làm tôi sững sờ vì nó chứng minh giả định "cần AI để kiểm tra quy cách" là hoàn toàn sai. Nỗi đau thật sự không nằm ở việc thiếu công nghệ chấm, mà nằm ở chỗ **sinh viên không có trong tay bộ kiểm tra đó để tự chạy trên máy mình trước khi nộp**.
+Một bất ngờ thứ hai là từ bạn sinh viên năm 4: bạn nói thẳng là không bao giờ muốn AI tự động sửa file bài làm của mình vì sợ làm hỏng nội dung gốc. Hai phản hồi thực tế này đã làm nhóm thay đổi hoàn toàn thiết kế: đưa sản phẩm về dạng công cụ chỉ đọc và báo lỗi (read-only / Augment) và ưu tiên Rule làm mặc định.
 
 **6.5. Điều khó nhất khi viết Problem Statement là gì?**
 
+Điều khó khăn nhất đối với tôi là việc **từ bỏ thói quen viết các con số giả định "đao to búa lớn" để quay về với các con số đo lường có căn cứ thực tế**.
+Khi mới viết Problem Card ở CP2, tôi rất dễ dãi viết vào bảng: "tiết kiệm 80% thời gian", "giảm tỷ lệ lỗi về 0% tuyệt đối", "nguy cơ bị trừ 5–10% tổng điểm". Đến khi sang CP5 và CP6, khi phải viết Problem Statement v0 và v1, nhóm bị chất vấn gắt gao: 5–10% lấy ở dòng nào trong rubric? 0% có đo được không hay là ảo tưởng? 
+Tôi đã phải mất rất nhiều thời gian cùng nhóm tra cứu lại toàn bộ văn bản `RUBRIC.md`, đối chiếu từng lời kể của TA và sinh viên được phỏng vấn để viết lại: thay 5–10% bằng "trừ 5 điểm trực tiếp do sai tên file/repo theo rubric", thay 0% bằng "giảm số bài sai quy chuẩn từ mốc tham chiếu 6/30 xuống $\le$ 1/30 bài", và ghi rõ baseline thời gian là 15–35 phút của 3 sinh viên thật. Việc học cách chấp nhận sự chưa hoàn hảo của dữ liệu ban đầu thay vì "làm màu" số liệu là bài học khó nhất nhưng thấm thía nhất.
+
 **6.6. Nếu làm lại, tôi sẽ đổi gì? Tôi sẽ phản biện nhóm mạnh hơn ở điểm nào?**
 
+Nếu có cơ hội làm lại từ đầu bài lab Day 02, tôi sẽ thay đổi hai điểm:
+- Thứ nhất, tôi sẽ làm bước phỏng vấn người dùng (The Mom Test) ngay từ trước khi viết Problem Card ở CP2 thay vì đợi đến CP4. Nếu phỏng vấn TA và các bạn cùng lớp sớm hơn 1 tiếng, nhóm tôi đã không mất thời gian tranh cãi về việc có nên dùng AI để quét cấu trúc file hay không, vì TA đã có câu trả lời từ trước.
+- Thứ hai, ở bước chấm điểm shortlist CP3, tôi sẽ phản biện mạnh hơn và yêu cầu nhóm chấm điểm khắt khe hơn đối với các con số giả định. Ví dụ card #4 của Vinh dù được viết rất chỉn chu nhưng toàn bộ số liệu 6 MST và 14 hóa đơn đều là giả định chưa kiểm chứng; nếu tôi phản biện quyết liệt hơn ngay từ đầu thì nhóm đã tiết kiệm được thời gian tranh luận giữa card #1 và card #4 để tập trung đào sâu vào quy trình của card #1 sớm hơn.
+
 **6.7. Hiểu bài:** giải thích bằng 5–8 câu, không nhìn tài liệu, chuỗi *problem → quy trình → metric → boundary → mức can thiệp AI → quyết định* của bài nhóm mình.
+
+1. **Problem:** Sinh viên làm bài lab thường mất từ 15–35 phút rà soát thủ công trong tình trạng mệt mỏi sát deadline 23h59, dẫn đến việc bỏ sót các lỗi hình thức (sai tên file, sai tên repo, để template rỗng) và bị trừ 5 điểm oan theo quy tắc rubric.
+2. **Quy trình:** Nhóm thiết kế quy trình hai tầng: sinh viên chạy một lệnh kiểm tra cục bộ trước khi nộp, hệ thống quét Tầng 1 (Rule checker kiểm tra file và thư mục) rồi đến Tầng 2 (LLM validator kiểm tra nội dung trường bắt buộc), sau đó xuất bảng checklist cảnh báo để sinh viên tự rà soát và tự quyết định sửa trước khi push Git nộp lên LMS.
+3. **Metric:** Thành công được đo lường bằng việc giảm thời gian rà soát checklist từ 15–35 phút xuống dưới 5 phút, và giảm số bài nộp sai quy cách từ mốc tham chiếu 6/30 bài (Day 01) xuống còn tối đa 1/30 bài trong lớp.
+4. **Boundary:** Ranh giới an toàn tuyệt đối là hệ thống chỉ hoạt động ở chế độ chỉ đọc (`read-only`), hiển thị cảnh báo để hỗ trợ người dùng (Augment), không bao giờ tự ý sửa file hay tự ý nộp bài, và phải có Fallback chạy offline trong vòng 15 giây nếu mất kết nối mạng.
+5. **Mức can thiệp AI:** Nhóm chọn mức **Workflow bán tự động** (kết hợp Rule-based script cho việc quét file và 1 bước LLM validation hẹp để phát hiện mục rỗng hoặc metric định tính) vì bài toán có độ mơ hồ thấp và quy trình mang tính tuần tự cố định.
+6. **Quyết định:** Nhóm đưa ra quyết định **GO** để triển khai thử nghiệm ở phạm vi nhỏ (pilot 3 nhóm tại bài lab Day 03), đi kèm ngưỡng dừng nghiêm ngặt: nếu sau 2 bài lab thử nghiệm mà tỷ lệ cảnh báo sai (False Positive) vượt quá 20% hoặc sinh viên vẫn mất hơn 10 phút để tự dò lại, nhóm sẽ lập tức dừng dự án và quay về phương án No AI checklist Excel.
 
 ---
 
 ## 7. Tài liệu tham khảo
 
--
+### 7.1. Framework phương pháp luận sản phẩm & Thiết kế AI
+1. **Design Council (UK)**, *Framework for Innovation: The Double Diamond design process*. [Link](https://www.designcouncil.org.uk/resources/framework-for-innovation/) — Áp dụng xuyên suốt toàn bài để mở rộng tìm kiếm vấn đề (Discover) và hội tụ định nghĩa bài toán (Define).
+2. **Alan Klement & Intercom**, *Jobs-to-be-Done / Job Stories Framework*. [Link](https://www.intercom.com/blog/accidentally-invented-job-stories/) — Dùng để chuẩn hóa 10 bài toán scan (CP1) và 3 Problem Cards (CP2) theo cú pháp *"Khi… tôi muốn… để…"*, tập trung vào động cơ và hoàn cảnh thay vì sa đà vào giải pháp.
+3. **Teresa Torres**, *Continuous Discovery Habits: Discover Products that Create Customer Value and Business Value*. [Link](https://www.producttalk.org/opportunity-solution-trees/) — Áp dụng xây dựng cây Opportunity Solution Tree (OST) để phân tách rạch ròi giữa Outcome, Opportunity và Solution.
+4. **Rob Fitzpatrick**, *The Mom Test: How to talk to customers & learn if your business is a good idea when everyone is lying to you* (2013). [Link](https://www.momtestbook.com/) — Nguyên tắc vàng trong CP4: phỏng vấn hành vi đã xảy ra trong quá khứ, không hỏi ý kiến giả định tương lai, tìm kiếm tín hiệu phản bác.
+5. **Google PAIR**, *People + AI Guidebook: User Needs + Defining Success*. [Link](https://pair.withgoogle.com/chapter/user-needs/) — Căn cứ giải quyết bài toán can thiệp hỗ trợ (Augment) thay vì tự động hóa hoàn toàn (Automate), và ưu tiên tránh bỏ sót (High Recall).
+6. **Anthropic Research**, *Building Effective Agents* (2024). [Link](https://www.anthropic.com/research/building-effective-agents) — Phân biệt rõ ranh giới giữa Workflow (hệ thống điều phối cố định bằng code) và Agent (tự chủ), là cơ sở để chọn mức can thiệp Workflow bán tự động cho bài toán.
+7. **Marty Cagan (SVPG)**, *Inspired: How to Create Tech Products Customers Love* — Khung đánh giá Four Big Risks (Value, Usability, Feasibility, Viability) dùng để ra quyết định GO ở CP6.
+
+### 7.2. Tài liệu kỹ thuật, tiêu chuẩn & công cụ gắn với 3 Problem Cards
+1. **Card #1 & Scan #1 — Rà soát quy cách bài nộp theo Rubric:**
+   - *Pre-commit Framework*, [pre-commit.com](https://pre-commit.com/) — Cơ chế quản lý hook cục bộ kiểm tra quy chuẩn file, cấu trúc thư mục và chặn chuỗi mẫu template trước khi commit git.
+   - *GitHub Docs: Use autograding with GitHub Classroom*, [docs.github.com](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/use-autograding) — Mô hình kiểm tra bài tập tự động mỗi lần sinh viên push bài.
+   - *markdownlint-cli*, [github.com/igorshubovych/markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) — Công cụ phân tích tĩnh kiểm tra cấu trúc tiêu đề, khoảng trắng và định dạng Markdown.
+2. **Card #2 & Scan #4 — Trích xuất bảng Benchmark & Ablation Study từ bài báo khoa học:**
+   - *Papers With Code*, [paperswithcode.com](https://paperswithcode.com/) — Nền tảng chuẩn hóa cấu trúc đối chiếu thử nghiệm AI: mô hình, dataset, metric và kết quả thực nghiệm.
+   - *Xu et al., LayoutLM: Pre-training of Text and Layout for Document Image Understanding* (KDD 2020) — Nghiên cứu nền tảng về Document AI sử dụng hình ảnh không gian 2D để trích xuất cấu trúc bảng biểu từ file PDF phi cấu trúc.
+3. **Card #3 & Scan #2 — Kiểm tra định dạng code & PR Checklist:**
+   - *PEP 8 – Style Guide for Python Code*, [peps.python.org/pep-0008](https://peps.python.org/pep-0008/) — Quy chuẩn quốc tế về phong cách viết mã nguồn, đặt tên hàm và cấu trúc docstring trong dự án phần mềm.
+   - *Black: The Uncompromising Code Formatter*, [black.readthedocs.io](https://black.readthedocs.io/) & *Flake8 Tooling* — Bộ công cụ linter tự động hóa kiểm tra quy chuẩn code trong quy trình CI/CD và Pull Request review.
