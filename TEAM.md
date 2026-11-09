@@ -6,7 +6,7 @@
 
 - Tên nhóm: NhomBVH
 - Candidate problem nhóm chọn (1 câu): Khi chuẩn bị nộp bài tập lớn/bài lab môn học trước hạn chót 23h59, sinh viên muốn tự động đối chiếu cấu trúc thư mục, quy tắc đặt tên file và các trường bắt buộc với rubric của đề bài, để không bị trừ điểm oan vì sai format nộp bài.
-- Quyết định cuối (Go / Not Yet / No-Go): Go (ở phạm vi nhỏ: Workflow bán tự động)
+- Quyết định cuối (Go / Not Yet / No-Go): Go (phạm vi nhỏ: Workflow có AI ở một bước hẹp — Rule làm phần chính, LLM cảnh báo tùy chọn)
 
 ## Thành viên
 
@@ -56,3 +56,26 @@ Mỗi thành viên thêm một mục theo mẫu dưới đây, tiêu đề là `
 **Điều mình học được từ phần nhóm:**
 
 - Nhận diện rõ ranh giới giữa một giải pháp công nghệ đơn thuần (Solution) và một cơ hội giải quyết nỗi đau có thật (Opportunity); biết cách dừng lại ở mức can thiệp đơn giản nhất đủ dùng thay vì phức tạp hóa bằng AI.
+
+### PhamDucVinh-2A202603849
+
+**Phần việc phụ trách:**
+
+- Scan 10 bài toán (CP1) và soạn 3 Problem Card (CP2) về hóa đơn điện tử cho kế toán dịch vụ; phản biện card của Bảo và Hiếu ở CP3.
+- Người chính phần kiểm chứng CP4; hỗ trợ research CP4 và CP6 (mức can thiệp, chạy eval, quyết định).
+
+**Đóng góp cụ thể** (mình đã làm gì, ra sản phẩm gì):
+
+- Chấm lại Assumption Map, soạn kịch bản phỏng vấn The Mom Test; tự kiểm từng link trong bảng research 3.3 và bỏ claim không nguồn.
+- Đối chiếu quy trình CP5 với `SUBMISSION.md`/`RUBRIC.md`: bổ sung số bước, thời gian bước 6, phương án quay về; bỏ bước tự động commit/push vì trái boundary read-only.
+- Chạy thật bộ 10 test case cho bước LLM với một prompt cố định, sửa prompt sau lần chạy nháp báo nhầm (TC-02, TC-10); kết quả 10/10 đạt, dùng làm điều kiện bật bước LLM trong pilot.
+
+**Bằng chứng** (phần nào trong `group_report.md`, file nào trong `report/assets/`, commit nào):
+
+- File cá nhân `report/individual/2A202603849_PhamDucVinh.md` (mục 4, 5)
+- `report/assets/cp4-interview-script.md`, `report/assets/cp6-eval-run.md`
+- Mục 3 (CP4), 4.3 và bảng eval mục 7 trong `report/team/group_report.md`; commit `cf3eab4` (CP3), `734e2bd` (CP4)
+
+**Điều mình học được từ phần nhóm:**
+
+- Card viết kỹ nhất chưa chắc là card nên chọn: tiêu chí "kiểm chứng được ngay" và "nhóm hiểu domain" quan trọng hơn ở giai đoạn Define. Kết quả eval phải chạy thật mới tin được — bản ghi "Đạt" viết sẵn đã che mất hai ca báo nhầm.

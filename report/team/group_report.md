@@ -8,7 +8,7 @@
 - Tên nhóm: NhomBVH
 - Thành viên: xem `TEAM.md` (Nguyễn Thế Bảo, Phạm Đức Vinh, Vũ Xuân Hiếu)
 - Candidate problem được chọn (1 câu): Khi chuẩn bị nộp bài tập lớn/bài lab môn học trước hạn chót 23h59, sinh viên muốn tự động đối chiếu cấu trúc thư mục, quy tắc đặt tên file và nội dung các trường bắt buộc với rubric của đề bài, để không bị trừ điểm oan vì sai format nộp bài.
-- Quyết định cuối: **Go (ở phạm vi nhỏ: Workflow bán tự động kết hợp Rule-based script và LLM validator)**
+- Quyết định cuối: **Go (phạm vi nhỏ: Workflow có AI ở một bước hẹp — Rule checker làm phần chính, một bước LLM cảnh báo tùy chọn, chỉ bật khi đạt bộ eval)**
 
 ---
 
@@ -232,14 +232,14 @@ graph TD
     E --> F["6. Sao chép link repo và nộp lên LMS (2 phút)"]
 ```
 
-| Bước | Actor | Input | Output | Thời gian / tần suất | Vấn đề quan sát được |
-|---:|---|---|---|---|---|
-| 1 | Sinh viên | `README.md`, `SUBMISSION.md`, `RUBRIC.md` | Danh sách yêu cầu cần nộp | 8 phút / mỗi bài lab | Yêu cầu có thể nằm ở nhiều file; đọc lướt dễ bỏ sót |
-| 2 | Sinh viên | Cây thư mục bài làm, tên repo và tên file | Xác nhận cấu trúc và tên file | 10 phút / mỗi bài lab | Dễ nhầm dấu `-` với `_`, sai thứ tự MSSV hoặc thiếu file |
-| 3 | Sinh viên | Các file Markdown trong `report/` | Xác nhận các mục bắt buộc đã được điền | 10 phút / mỗi bài lab | Có thể bỏ trống mục hoặc giữ nguyên nội dung template |
-| 4 | Sinh viên | Mã nguồn và báo cáo đã rà soát | Commit và push lên remote | 5 phút / mỗi bài lab | Thao tác Git; không trực tiếp kiểm tra chất lượng quy cách |
-| 5 | Sinh viên | Repo trên GitHub | Xác nhận nội dung đã xuất hiện trên remote | 5 phút / mỗi bài lab | Phải mở trình duyệt và kiểm tra lại thủ công |
-| 6 | Sinh viên | URL repository | Hoàn tất nộp bài trên LMS | 2 phút / mỗi bài lab | Sao chép và dán link |
+| Bước | Actor | Input | Output | Thời gian / tần suất | Handoff (chuyển cho ai) | Vấn đề quan sát được |
+|---:|---|---|---|---|---|---|
+| 1 | Sinh viên | `README.md`, `SUBMISSION.md`, `RUBRIC.md` | Danh sách yêu cầu cần nộp | 8 phút / mỗi bài lab | Chính sinh viên (bước 2) | Yêu cầu có thể nằm ở nhiều file; đọc lướt dễ bỏ sót |
+| 2 | Sinh viên | Cây thư mục bài làm, tên repo và tên file | Xác nhận cấu trúc và tên file | 10 phút / mỗi bài lab | Chính sinh viên (bước 3) | Dễ nhầm dấu `-` với `_`, sai thứ tự MSSV hoặc thiếu file |
+| 3 | Sinh viên | Các file Markdown trong `report/` | Xác nhận các mục bắt buộc đã được điền | 10 phút / mỗi bài lab | Chính sinh viên (bước 4) | Có thể bỏ trống mục hoặc giữ nguyên nội dung template |
+| 4 | Sinh viên | Mã nguồn và báo cáo đã rà soát | Commit và push lên remote | 5 phút / mỗi bài lab | GitHub (repo nhóm) | Thao tác Git; không trực tiếp kiểm tra chất lượng quy cách |
+| 5 | Sinh viên | Repo trên GitHub | Xác nhận nội dung đã xuất hiện trên remote | 5 phút / mỗi bài lab | Chính sinh viên (bước 6) | Phải mở trình duyệt và kiểm tra lại thủ công |
+| 6 | Sinh viên | URL repository | Hoàn tất nộp bài trên LMS | 2 phút / mỗi bài lab | TA/giảng viên chấm bài | Sao chép và dán link |
 
 **Tổng thời gian ước tính:** 40 phút/lần nộp (8 + 10 + 10 + 5 + 5 + 2). Trong đó, hai bước rà soát thủ công (bước 2 và 3) chiếm khoảng 20 phút. Đây là bottleneck chính cần cải thiện.
 
@@ -258,23 +258,26 @@ graph TD
     E --> A
     C -- "Không" --> F["3. Hiển thị checklist kết quả kiểm tra Rule"]
     F --> G{"Có trường cần đánh giá ngữ nghĩa?"}
-    G -- "Không" --> H["4. Sinh viên xem lại kết quả và tự quyết định nộp"]
-    G -- "Có, và đã bật kiểm tra bổ sung" --> I["LLM đối chiếu nội dung với rubric, chỉ đưa ra cảnh báo kèm căn cứ"]
+    G -- "Không" --> H["5. Sinh viên xem lại kết quả và tự quyết định nộp"]
+    G -- "Có, và đã bật kiểm tra bổ sung" --> I["4. LLM (tùy chọn) đối chiếu nội dung với rubric, chỉ đưa ra cảnh báo kèm căn cứ"]
     I --> J["Sinh viên kiểm tra cảnh báo và tự sửa nếu cần"]
     J --> H
-    H --> K["5. Sinh viên tự commit, push và nộp link LMS"]
+    H --> K["6. Sinh viên tự commit, push và nộp link LMS"]
 ```
 
 | Bước | Actor / thành phần | Input | Output | Thời gian mục tiêu | Ghi chú |
 |---:|---|---|---|---|---|
 | 1 | Sinh viên | Repository bài làm và bộ hướng dẫn | Yêu cầu chạy kiểm tra | Dưới 1 phút thao tác | Chạy một lệnh CLI; không tự động sửa hoặc push |
-| 2 | Rule checker | Tên repo, cây thư mục, tên file, nội dung Markdown và các quy tắc đã cấu hình | Danh sách lỗi xác định được bằng quy tắc | Vài giây, cần đo khi prototype | Kiểm tra file bắt buộc, regex tên file, mục rỗng và chuỗi template |
-| 3 | Rule checker | Kết quả kiểm tra | Checklist đạt/chưa đạt, kèm đường dẫn và lý do | Gần như tức thời sau bước 2 | Không dùng AI cho các điều kiện đúng/sai rõ ràng |
+| 2 | Rule checker | Tên repo, cây thư mục, tên file, nội dung Markdown và các quy tắc đã cấu hình | Danh sách lỗi xác định được bằng quy tắc | Dưới 1 phút (vài giây chạy máy), cần đo khi prototype | Kiểm tra file bắt buộc, regex tên file, mục rỗng và chuỗi template |
+| 3 | Rule checker | Kết quả kiểm tra | Checklist đạt/chưa đạt, kèm đường dẫn và lý do | Dưới 1 phút (đọc lướt checklist) | Không dùng AI cho các điều kiện đúng/sai rõ ràng |
 | 4 | LLM validator (tùy chọn) | Rubric và những trường nội dung cần đánh giá ngữ nghĩa | Cảnh báo có trích dẫn tiêu chí liên quan | Mục tiêu dưới 15 giây, cần kiểm thử | Chỉ bật nếu Rule không đủ; không tự kết luận thay người học |
 | 5 | Sinh viên | Checklist và cảnh báo (nếu có) | Quyết định sửa hoặc chấp nhận cảnh báo | Mục tiêu 2–3 phút, cần đo thực tế | HITL: sinh viên tự kiểm tra và tự sửa |
-| 6 | Sinh viên | Bài làm đã được rà soát | Commit, push và nộp link LMS | Theo quy trình hiện tại | Không tự động commit, push hoặc nộp bài |
+| 6 | Sinh viên | Bài làm đã được rà soát | Commit, push và nộp link LMS | 12 phút (commit/push 5' + kiểm tra repo online 5' + nộp LMS 2') | Không tự động commit, push hoặc nộp bài |
 
-**Cơ chế dự phòng:** Nếu LLM không phản hồi hoặc mất mạng, công cụ vẫn trả về kết quả Rule-based cục bộ. Người học tiếp tục tự kiểm tra các mục cần đọc hiểu bằng checklist; không được coi việc LLM lỗi là bằng chứng bài làm đã đạt.
+**Phương án quay về:**
+- **LLM không phản hồi (quá 15 giây) hoặc mất mạng:** công cụ vẫn trả về kết quả Rule-based cục bộ. Người học tự kiểm tra các mục cần đọc hiểu bằng checklist; không được coi việc LLM lỗi là bằng chứng bài làm đã đạt.
+- **LLM cảnh báo nhầm:** sinh viên đối chiếu với tiêu chí rubric được trích kèm cảnh báo; nếu thấy mình đúng thì bỏ qua cảnh báo đó và ghi lại để chỉnh prompt/quy tắc.
+- **Rule checker lỗi, không chạy được hoặc thiếu quy tắc cho bài mới:** quay về checklist Markdown thủ công (sinh từ cùng bộ quy tắc) và tự dò như quy trình hiện tại (bước 2–3, khoảng 20 phút); người viết bộ quy tắc bổ sung quy tắc còn thiếu.
 
 **Boundary và HITL:**
 - Rule checker được phép đọc tên file, cấu trúc thư mục và nội dung các file thuộc phạm vi bài nộp; không ghi đè hoặc xóa file.
@@ -287,6 +290,8 @@ graph TD
 
 | Chỉ số | Trước | Sau (mục tiêu thiết kế, chưa phải kết quả đo) | Cách kiểm chứng |
 |---|---:|---:|---|
+| Số bước | 6 | 5 (6 nếu bật bước LLM tùy chọn) | Đếm theo sơ đồ 4.1 và 4.2: bỏ bước đọc rubric để nhớ quy cách và bước dò tay, thêm bước chạy lệnh kiểm tra |
+| Số bước thủ công | 6/6 | 3/5 (chạy lệnh, xem kết quả và sửa, commit/push/nộp) | Rule checker và LLM (nếu bật) là bước tự động; sinh viên vẫn tự sửa và tự nộp |
 | Tổng thời gian quy trình | Khoảng 40 phút theo ước tính từng bước | Mục tiêu dưới 25 phút, trong đó rà soát checklist dưới 5 phút | Bấm giờ trên cùng một bài nộp trước và sau khi dùng prototype |
 | Thời gian rà soát tên file, thư mục và nội dung | Khoảng 20 phút tự dò bằng mắt | Mục tiêu dưới 5 phút để chạy và xem kết quả | Ghi thời điểm bắt đầu chạy lệnh và kết thúc xem checklist |
 | Cách phát hiện lỗi | Sinh viên tự mở từng file để dò | Rule báo lỗi xác định được; LLM chỉ cảnh báo phần ngữ nghĩa nếu cần | Đối chiếu cảnh báo với bộ test có lỗi đã biết |
@@ -307,12 +312,11 @@ Các con số ở cột “Sau” là **mục tiêu để thử nghiệm**, khô
 | **Nhu cầu / vấn đề** | Sinh viên cần biết sớm bài nộp có sai tên file, thiếu file/thư mục hoặc còn mục template chưa điền hay không, thay vì phải tự dò từng thành phần bằng mắt sát deadline. |
 | **Bottleneck** | Hai bước tự kiểm tra tên file/cấu trúc và đọc từng file báo cáo mất khoảng 20 phút theo ước tính ban đầu. Phỏng vấn CP4 ghi nhận 3/3 sinh viên đúng actor mất 15–35 phút rà soát ở lần nộp gần nhất. |
 | **Bằng chứng hiện có** | CP4 phỏng vấn 5 người, trong đó 3 sinh viên đúng actor đều kể lại tình huống rà soát quy cách; trợ giảng cho biết 6/30 bài Day 01 sai quy chuẩn đặt tên file. Các dữ liệu này là tín hiệu ban đầu, chưa đủ để suy rộng thành tỷ lệ lỗi ổn định cho mọi đợt nộp. |
-| **Impact** | Sai quy cách có thể khiến bài bị nhắc sửa, mất thời gian xử lý sau nộp hoặc bị trừ điểm theo rubric. CP4 xác nhận có 6/30 bài Day 01 sai tên file theo lời trợ giảng; mức trừ điểm cụ thể và tổng thiệt hại điểm chưa được xác minh bằng rubric/bảng điểm, nên không khẳng định mức 5–10%. |
+| **Impact** | Theo `RUBRIC.md`, sai tên repo hoặc sai tên file báo cáo bị **trừ 5 điểm** (giữ nguyên tên template `MSSV_HoTen.md` cũng tính là sai). CP4 ghi nhận 6/30 bài Day 01 sai quy chuẩn đặt tên file theo lời trợ giảng, và trợ giảng mất thêm khoảng 1 giờ mỗi đợt chấm để xử lý các bài này. Thiệt hại thực tế trên bảng điểm của từng bài chưa được đối chiếu. |
 | **Success Metric** (baseline → target, cách đo) | **Baseline:** 6/30 bài Day 01 sai quy chuẩn đặt tên file theo thông tin trợ giảng; thời gian tự rà soát của 3 sinh viên đúng actor được phỏng vấn là 15–35 phút/lần. **Target pilot:** giảm số bài sai quy cách từ mốc tham chiếu 6/30 xuống không quá 1/30; giảm thời gian rà soát checklist xuống dưới 5 phút. **Cách đo:** dùng cùng checklist và tiêu chí rubric cho các bài pilot; ghi nhận số bài có lỗi quy cách qua kết quả kiểm tra/chấm bài, đồng thời bấm giờ thời gian rà soát. Vì mẫu ban đầu nhỏ và khác nhau về nguồn đo, cần thu thập baseline trên cùng nhóm/lớp trước khi kết luận mức cải thiện. |
 | **Boundary / HITL** | Công cụ chỉ đọc và báo cáo (read-only), không tự sửa, ghi đè hoặc xóa file; không tự commit, push hay nộp bài lên LMS. Mọi cảnh báo phải nêu file/vị trí và căn cứ kiểm tra. Sinh viên tự xác minh, quyết định sửa và thực hiện nộp bài. |
-| **Giả thuyết giải pháp cần kiểm chứng** | Một lệnh kiểm tra cục bộ có thể dùng Rule để phát hiện lỗi cấu trúc, tên file, file thiếu và chuỗi template chưa thay. Chỉ khi xuất hiện trường hợp cần đánh giá ngữ nghĩa mà Rule không xử lý được mới thử nghiệm LLM; không mặc định mọi bước đều cần AI. |
 
-**Phản biện và điều chỉnh sau CP4:**
+**Phản biện nhận được** (nhờ AI đóng vai PM hoài nghi, prompt "chỉ ra lỗ hổng, không viết lại"; nhóm tự quyết định đồng ý hay không):
 
 - **Phản biện 1: Phần lớn lỗi đã có thể phát hiện bằng script, vậy có cần AI không?**  
   **Nhóm đồng ý một phần.** Trợ giảng đã có script Bash để kiểm tra tên file; các lỗi được kể trong phỏng vấn như sai tên file, thiếu file và chuỗi template chưa thay phần lớn có thể kiểm tra bằng Rule. Vì vậy, Problem Statement v0 đặt Rule làm phương án mặc định; LLM chỉ là giả thuyết bổ sung cho trường hợp cần đọc hiểu ngữ nghĩa, chưa phải yêu cầu bắt buộc.
@@ -321,56 +325,54 @@ Các con số ở cột “Sau” là **mục tiêu để thử nghiệm**, khô
   **Nhóm không đồng ý.** Insight từ phỏng vấn CP4 cho thấy người học muốn được chỉ ra lỗi để tự sửa, không muốn công cụ tự thay đổi file. Do đó, công cụ chỉ hoạt động read-only; sinh viên giữ quyền quyết định và thực hiện thao tác nộp.
 
 - **Phản biện 3: Các số liệu 6/30, 15–35 phút và mức trừ điểm có đủ đại diện không?**  
-  **Nhóm đồng ý cần thận trọng.** 6/30 là số bài sai tên file trong một đợt Day 01 theo lời trợ giảng; 15–35 phút là thời gian do 3 sinh viên đúng actor kể lại. Chưa có căn cứ xác nhận mức trừ 5–10%, nên loại con số này khỏi Problem Statement. Các mục tiêu pilot cần được đo lại trên cùng một nhóm và cùng tiêu chí.
+  **Nhóm đồng ý cần thận trọng.** 6/30 là số bài sai tên file trong một đợt Day 01 theo lời trợ giảng; 15–35 phút là thời gian do 3 sinh viên đúng actor kể lại. Con số "trừ 5–10% điểm môn" không có nguồn nên đã bỏ; thay bằng quy định trong `RUBRIC.md` (sai tên repo hoặc tên file báo cáo bị trừ 5 điểm). Các mục tiêu pilot cần được đo lại trên cùng một nhóm và cùng tiêu chí.
+
 ---
 
 ## 6. Mức can thiệp AI (CP6)
 
 ### 6.1. Ma trận độ mơ hồ × độ phức tạp
 
-Bài của nhóm nằm ở ô: **Độ mơ hồ THẤP × Độ phức tạp TRUNG BÌNH (Low Ambiguity × Medium Complexity)**.
+Bài của nhóm nằm ở ô: **Độ mơ hồ thấp × Độ phức tạp thấp**, với một phần nhỏ có độ mơ hồ trung bình.
 
-Vì sao:
-- *Độ mơ hồ thấp:* Rubric và tiêu chuẩn nộp bài đã được văn bản hóa rất rõ ràng trong các file Markdown (`RUBRIC.md`, `SUBMISSION.md`). Quy tắc đúng/sai rất rạch ròi, không có nhiều yếu tố cảm tính.
-- *Độ phức tạp trung bình:* Cần kết hợp giữa việc quét hệ thống tệp tin (filesystem), đối chiếu regex, trích xuất cấu trúc văn bản Markdown và phân tích ngữ nghĩa mức độ hoàn thiện của từng đoạn văn bản.
+- *Độ mơ hồ thấp:* phần lớn yêu cầu quy cách có đúng/sai rõ ràng (tên repo, tên file `MSSV_HoTen.md`, file bắt buộc, mục còn để trống hoặc còn nguyên template, số từ tối thiểu).
+- *Phần mơ hồ trung bình:* một số mục bắt buộc có chữ nhưng chưa chắc đạt yêu cầu, ví dụ Success Metric có đủ baseline, target và cách đo chưa, hay Job Story có đang lẫn giải pháp không. Nhiều cách viết khác nhau đều có thể đạt, nên quy tắc cố định khó bắt hết.
+- *Độ phức tạp thấp:* các bước cố định (chạy kiểm tra → xem kết quả → tự sửa → tự nộp), một nguồn dữ liệu (repo bài làm và bộ hướng dẫn của đề), không rẽ nhánh theo quyết định của AI.
+
+→ Theo ma trận: Rule là chính; nếu cần thì Workflow có AI ở **một** bước cho phần mơ hồ.
 
 ### 6.2. So sánh 4 mức
 
 | Mức | Phương án cho bài của nhóm | Đủ khi nào | Rủi ro | Chọn? |
 |---|---|---|---|---|
-| **No AI** (sửa quy trình) | Cung cấp 1 file checklist bằng giấy/Excel và yêu cầu sinh viên tích từng ô trước khi nộp. | Đủ nếu sinh viên luôn có tính kỷ luật cao và không bao giờ bị mất tập trung sát giờ nộp. | Sinh viên mệt mỏi vẫn tích bừa cho xong; không ngăn chặn được lỗi do sơ suất của con người. | Không chọn |
-| **Rule** | Viết một shell script kiểm tra sự tồn tại của file và kiểm tra regex tên file, tên repo. | Đủ nếu mục tiêu chỉ là kiểm tra cấu trúc cây thư mục (tên repo, tên file cá nhân). | Không thể kiểm tra được nội dung bên trong file (không biết sinh viên có để template rỗng không, không biết metric có baseline/target không). | Chọn 1 phần (Tầng 1) |
-| **Workflow** | Các bước được điều phối cố định bằng mã nguồn: Bước 1 chạy Rule kiểm tra file ➔ Bước 2 gọi 1 prompt LLM kiểm tra ngữ nghĩa nội dung báo cáo ➔ Bước 3 hiển thị bảng checklist cho người duyệt. | Đủ khi quy trình đã xác định rõ các bước cố định, nhưng cần khả năng hiểu ngôn ngữ tự nhiên để đọc nội dung file báo cáo. | Phụ thuộc vào kết nối mạng và độ trễ của API LLM. (Đã xử lý bằng Fallback). | **CHỌN (Tối ưu nhất)** |
-| **Agent** | AI tự do suy luận, tự mở các công cụ terminal, tự sửa code và tự quyết định nộp bài thay sinh viên. | Chỉ cần khi quy trình nộp bài hoàn toàn bất định, không đoán trước được cần làm gì. | Cực kỳ nguy hiểm: AI có thể tự sửa sai nội dung bài làm, tốn chi phí token không cần thiết, độ tin cậy thấp. | Không chọn |
+| **No AI** | Checklist Markdown sinh từ `SUBMISSION.md`/`RUBRIC.md`, sinh viên tự tích trước khi nộp | Sinh viên còn tỉnh táo và tự dò kỹ | Vẫn là dò bằng mắt sát deadline — đúng bottleneck đang muốn bỏ | Dùng làm phương án quay về |
+| **Rule** | Script kiểm tên repo, tên file, thư mục, file bắt buộc, mục rỗng, chuỗi template còn sót, số từ tối thiểu (pre-commit/pygrep hoặc script riêng) | Các yêu cầu có đúng/sai rõ — phần lớn lỗi sinh viên kể ở CP4 (sai tên file, thiếu `TEAM.md`, mục còn template) | Thiếu quy tắc khi đề bài đổi; không đánh giá được mục có chữ nhưng chưa đạt | **Chọn — làm phần chính** |
+| **Workflow** | Rule chạy trước; sau đó **một** bước LLM chỉ đọc các mục được chỉ định (Success Metric, Boundary, Job Story, câu hỏi phỏng vấn, Problem Statement) và đưa cảnh báo kèm tiêu chí trích từ hướng dẫn của đề; sinh viên tự quyết định | Các bước cố định, AI chỉ làm phần đọc hiểu mà Rule không làm được | LLM báo nhầm, bỏ sót hoặc trích tiêu chí không có trong đề | **Chọn — bước LLM là tùy chọn, chỉ bật khi đạt bộ eval ở mục 7** |
+| **Agent** | AI tự đọc đề, tự sửa file, tự commit, push và nộp | Khi bước tiếp theo không đoán trước được | Tự sửa bài làm sai, mất quyền kiểm soát của sinh viên; trái boundary read-only | Không chọn |
 
-**Mức chọn:** **Workflow bán tự động (Rule-based kết hợp 1 bước LLM validation và Human-in-the-loop).**
+**Mức chọn:** **Workflow có AI ở một bước hẹp** — Rule checker làm phần chính, một bước LLM cảnh báo (tùy chọn) cho các mục cần đọc hiểu, sinh viên kiểm tra và tự nộp.
 
-**Vì sao không chọn mức đơn giản hơn (Rule-based thuần túy):**
-Vì Rule-based thuần túy chỉ kiểm tra được phần "vỏ" (tên file, kích thước file, sự tồn tại của header), nhưng bất lực trước phần "ruột" (ngữ nghĩa). Ví dụ: một sinh viên nộp file báo cáo cá nhân nhưng chỉ copy template và giữ nguyên các câu hỏi của giảng viên mà không trả lời, hoặc điền metric chung chung là "nhanh hơn tiện hơn", thì script regex vẫn coi là hợp lệ trong khi thực tế sinh viên sẽ bị trừ từ 5 đến 10 điểm theo rubric C9. Cần có 1 bước LLM đọc hiểu ngữ nghĩa để phát hiện các lỗ hổng này.
+**Vì sao không chọn mức đơn giản hơn (chỉ Rule):** research ở mục 3.3 cho thấy Rule bắt được tên file, cấu trúc thư mục, file bắt buộc, mục rỗng, chuỗi template và số từ, nhưng còn hai khoảng trống: (1) mục Success Metric có chữ nhưng thiếu baseline, target hoặc cách đo; (2) câu trả lời lẫn giải pháp (ví dụ Job Story "tôi muốn có một công cụ tự động…" không chứa từ khóa "AI", "chatbot"). Đây đều là yêu cầu có trong hướng dẫn của đề (CHECKPOINTS CP1, CP5; RUBRIC C1, C9 có mức trừ điểm riêng), và có nhiều cách viết nên regex không bắt hết. **Giới hạn của lập luận này:** phỏng vấn CP4 chưa có ai kể bị trừ điểm vì lỗi loại này, nên giá trị của bước LLM là giả định cần kiểm trong pilot (rủi ro Value, mục 8.1). Nếu pilot cho thấy loại lỗi này hầu như không xảy ra, nhóm tắt bước LLM và giữ mức Rule.
 
-**Vì sao không chọn mức cao hơn (Agent):**
-Toàn bộ quy trình từ kiểm tra file đến xuất báo cáo là một luồng tuần tự cố định (deterministic pipeline), không yêu cầu AI phải tự lập kế hoạch hay tự lựa chọn công cụ ngẫu nhiên. Việc dựng Agent tự hành chỉ làm tăng độ trễ, dễ sinh lỗi (hallucination) và tốn kém chi phí vô ích.
+**Vì sao không chọn mức cao hơn (Agent):** các bước đã cố định; quyết định sửa và nộp bài thuộc về sinh viên (boundary read-only ở mục 5); không có bước nào cần AI tự lập kế hoạch.
 
 ### 6.3. AI Canvas rút gọn
 
 | Thành phần | Nội dung |
 |---|---|
-| **Prediction** — AI dự đoán / tạo ra gì? | Đọc nội dung file báo cáo và dự đoán xem từng trường bắt buộc (Actor, Bottleneck, Metric, Boundary...) đã đạt yêu cầu theo Rubric hay chưa (Đạt / Chưa đạt / Thiếu dữ liệu). |
-| **Judgment** — con người cân nhắc, quyết định gì? | Sinh viên xem danh sách các cảnh báo màu vàng/đỏ và tự quyết định: có cần sửa lại nội dung file bài làm của mình trước khi nộp hay không. |
-| **Action** — hành động cuối cùng là gì, ai làm? | Sinh viên tự chỉnh sửa nội dung file trên máy tính và bấm xác nhận push Git để nộp bài. |
-| **Outcome** — đo kết quả bằng gì? | Số bài nộp bị trừ điểm quy chuẩn/format trong lớp giảm từ mốc tham chiếu 6/30 xuống ≤ 1/30; thời gian rà soát checklist trước deadline giảm từ ~20 phút xuống dưới 5 phút. |
-| **Input** — AI cần dữ liệu đầu vào gì mỗi lần chạy? Có sẵn không? | File `RUBRIC.md` của đề bài và nội dung các file báo cáo Markdown trong thư mục `report/`. Dữ liệu này luôn có sẵn cục bộ trên máy sinh viên. |
-| **Feedback** — lấy phản hồi ở đâu để cải thiện? | Phản hồi từ nút bấm của sinh viên ("Tôi đã sửa" hoặc "Bỏ qua cảnh báo này") và bảng điểm chính thức do giảng viên công bố sau đó. |
+| **Prediction** — AI dự đoán / tạo ra gì? | Với mỗi mục được chỉ định (Success Metric, Boundary, Job Story, câu hỏi phỏng vấn, Problem Statement): "có vẻ chưa đạt" hoặc "không có cảnh báo", kèm **tiêu chí trích nguyên văn** từ `CHECKPOINTS.md`/`RUBRIC.md`/worksheet và vị trí (file, mục). |
+| **Judgment** — con người cân nhắc, quyết định gì? | Sinh viên đọc cảnh báo, đối chiếu với tiêu chí được trích và quyết định: sửa, hay bỏ qua vì cảnh báo nhầm. |
+| **Action** — hành động cuối cùng là gì, ai làm? | Sinh viên tự sửa file, chạy lại kiểm tra, rồi tự commit, push và nộp link LMS. |
+| **Outcome** — đo kết quả bằng gì? | Số bài bị trừ điểm vì quy cách (6/30 → ≤ 1/30); thời gian rà soát (15–35 phút → dưới 5 phút); tỷ lệ cảnh báo nhầm của bước LLM (≤ 2/10 cảnh báo bị sinh viên đánh dấu nhầm). |
+| **Input** — AI cần dữ liệu đầu vào gì mỗi lần chạy? Có sẵn không? | Nội dung các mục được chỉ định (Rule checker đã tách sẵn theo tiêu đề) và các file hướng dẫn của đề (`CHECKPOINTS.md`, `RUBRIC.md`, `docs/01-worksheet.md`). Đều có sẵn trong repo, không có dữ liệu cá nhân. |
+| **Feedback** — lấy phản hồi ở đâu để cải thiện? | Cảnh báo bị sinh viên đánh dấu "nhầm"; feedback của TA sau khi chấm (lỗi nào lọt qua cả Rule và LLM). |
 
 ### 6.4. Hai câu hỏi của Google PAIR
 
-- **Người dùng muốn được hỗ trợ (augment) hay giao hẳn việc (automate)? Bằng chứng:**
-  - *Kết luận:* Người dùng muốn **ĐƯỢC HỖ TRỢ (Augment)**.
-  - *Bằng chứng:* Phỏng vấn ở CP4 cho thấy 100% sinh viên từ chối việc để AI tự động chỉnh sửa nội dung file hoặc tự động nộp bài thay họ, vì điểm số bài lab ảnh hưởng trực tiếp đến kết quả học tập. Họ chỉ muốn một bảng tổng hợp lỗi rõ ràng để tự tay chỉnh sửa và tự bấm nút nộp.
-- **AI sai kiểu nào tệ hơn, báo nhầm hay bỏ sót? Vì sao, và thiết kế đã xử lý thế nào:**
-  - *Kết luận:* **BỎ SÓT (False Negative) TỆ HƠN RẤT NHIỀU SO VỚI BÁO NHẦM (False Positive)**.
-  - *Vì sao:* Nếu AI báo nhầm (ví dụ: metric đã khá rõ nhưng AI vẫn cảnh báo vàng là hơi chung chung), sinh viên chỉ mất 10 giây đọc lại và bỏ qua. Nhưng nếu AI **bỏ sót** một lỗi sai tên repo hoặc bỏ sót một file template rỗng mà không báo, sinh viên sẽ chủ quan nộp bài và bị trừ thẳng 5–10 điểm môn học.
-  - *Thiết kế xử lý:* Nhóm thiết kế prompt của LLM theo hướng **thận trọng cao (High Recall)**: Ưu tiên cảnh báo khi có nghi vấn chưa rõ ràng, hiển thị rõ lý do vì sao nghi ngờ để con người kiểm tra lại.
+- **Augment hay automate?** *Augment.* Người được phỏng vấn ở Snapshot 4 nói muốn được chỉ ra đúng dòng, đúng file sai để tự sửa, không muốn công cụ tự sửa file. Đây là ý kiến của 1 người (ngoài actor chính), nhưng khớp với workaround của 3/3 sinh viên đúng actor (tự mở file, tự dò, tự sửa). Vì vậy công cụ chỉ đọc và cảnh báo; sinh viên giữ quyền sửa và nộp.
+- **Sai kiểu nào tệ hơn?**
+  - *Ở phần Rule:* **bỏ sót tệ hơn** — lọt một lỗi tên file là bị trừ 5 điểm theo `RUBRIC.md`. Vì vậy Rule được viết chặt và mọi lỗi TA phát hiện mà Rule bỏ sót đều là điều kiện dừng pilot (mục 8.2).
+  - *Ở bước LLM:* **báo nhầm có chi phí thấp nhưng không được nhiều** — mỗi cảnh báo nhầm chỉ tốn vài giây đọc lại vì có trích tiêu chí, nhưng báo nhầm quá nhiều thì sinh viên sẽ bỏ qua cả cảnh báo đúng. Thiết kế: ưu tiên không bỏ sót, bắt buộc trích tiêu chí cho từng cảnh báo, và đặt ngưỡng cảnh báo nhầm ≤ 2/10.
 
 ---
 
@@ -378,48 +380,52 @@ Toàn bộ quy trình từ kiểm tra file đến xuất báo cáo là một lu�
 
 | Trường | Nội dung |
 |---|---|
-| **Actor** | Sinh viên và nhóm sinh viên thực hành các môn học công nghệ/AI tại trường đại học trước mỗi kỳ hạn nộp bài lab. |
-| **Quy trình** | Sinh viên chạy công cụ kiểm tra ➔ Rule Engine quét tên file & repo ➔ LLM Validator quét ngữ nghĩa nội dung ➔ Sinh viên duyệt bảng checklist (HITL) ➔ Push Git nộp bài. |
-| **Bottleneck** | Khâu rà soát thủ công các lỗi định dạng và tính đầy đủ của nội dung báo cáo sát deadline đêm muộn (mất 20 phút). |
-| **Impact** | Bị trừ 5 điểm trực tiếp vào điểm tổng kết bài lab theo quy tắc chấm của rubric (do sai tên repo, tên file hoặc giữ nguyên template) hoặc bị 0 điểm phần nộp bài nếu thiếu file bắt buộc (`group_report.md`, `TEAM.md`). |
-| **Success Metric** (baseline → target, cách đo) | **Baseline:** 6/30 bài Day 01 sai quy chuẩn đặt tên file theo thông tin trợ giảng; thời gian tự rà soát thủ công của 3 sinh viên đúng actor được phỏng vấn là 15–35 phút/lần (trung bình ~20 phút). **Target pilot:** giảm số bài sai quy cách từ mốc tham chiếu 6/30 xuống ≤ 1/30 bài; rút ngắn thời gian chạy và rà soát checklist xuống dưới 5 phút. **Cách đo:** bấm giờ từ khi chạy công cụ đến khi duyệt xong checklist; đối chiếu với kết quả chấm điểm quy chuẩn của TA/giảng viên ở các bài lab tiếp theo (Day 03, Day 04). |
-| **Boundary** | AI chỉ được đọc (`read-only`), tuyệt đối không tự sửa file hoặc tự ý nộp bài. Phải có cơ chế Fallback timeout 15 giây chuyển về Rule-based offline khi mất mạng. |
-| **AI intervention point** | Chen vào bước phân tích ngữ nghĩa nội dung các file báo cáo Markdown: so khớp nội dung từng mục với tiêu chí rubric tương ứng để tìm mục rỗng hoặc metric định tính. |
-| **Mức chọn** | **Workflow bán tự động** (Rule Engine + LLM Validator + HITL). |
-| **Rủi ro & người kiểm tra** | Rủi ro AI báo nhầm hoặc hallucinate tiêu chí rubric; Sinh viên (học viên) là người duy nhất chịu trách nhiệm kiểm tra lại các cảnh báo trước khi nộp. |
+| **Actor** | Sinh viên hoặc nhóm sinh viên thực hiện bài lab/bài tập lớn thuộc các môn công nghệ và AI, nộp bài qua repo GitHub, trước mỗi hạn nộp bài. |
+| **Bối cảnh / thời điểm** | Trước khi commit, push repository và gửi đường dẫn bài làm lên LMS; thường cần rà soát khi thời hạn nộp đã gần đến. |
+| **Quy trình hiện tại** | Đọc `README.md`, `SUBMISSION.md`, `RUBRIC.md` → tự đối chiếu tên repo, tên file, cấu trúc thư mục → mở từng file Markdown kiểm tra mục bắt buộc → commit/push → kiểm tra repo trên GitHub → nộp link LMS. |
+| **Bottleneck** | Hai bước tự kiểm tra tên file/cấu trúc và đọc từng file báo cáo, khoảng 20 phút theo ước tính; 3/3 sinh viên đúng actor kể mất 15–35 phút. **Trong đó có phần không kiểm được bằng quy tắc cố định:** mục bắt buộc có chữ nhưng chưa đạt yêu cầu của đề (ví dụ Success Metric thiếu baseline/target/cách đo). |
+| **Impact** | Theo `RUBRIC.md`, sai tên repo hoặc tên file báo cáo bị trừ 5 điểm; 6/30 bài Day 01 sai quy chuẩn đặt tên file (trợ giảng); trợ giảng mất thêm khoảng 1 giờ mỗi đợt chấm. |
+| **Success Metric** (baseline → target, cách đo) | (1) Số bài sai quy cách: 6/30 (Day 01) → ≤ 1/30, đếm qua kết quả chấm của TA trong 2 bài lab pilot.<br>(2) Thời gian rà soát: 15–35 phút → dưới 5 phút, sinh viên pilot tự bấm giờ.<br>(3) **Chất lượng phần Rule:** 0 lỗi tên file/file bắt buộc lọt tới TA mà Rule không báo.<br>(4) **Chất lượng bước LLM:** đạt ≥ 8/10 test case ở bộ eval và 0 cảnh báo trích tiêu chí không có trong đề; trong pilot, ≤ 2/10 cảnh báo bị sinh viên đánh dấu nhầm. |
+| **Boundary / HITL** | Công cụ chỉ đọc và báo cáo, không tự sửa, ghi đè hoặc xóa file; không tự commit, push hay nộp bài. Mọi cảnh báo phải nêu file/vị trí và căn cứ. **Bước LLM** chỉ đọc các mục được chỉ định, chỉ cảnh báo chứ không chặn nộp, không chấm điểm nội dung, không đưa ra tiêu chí không có trong hướng dẫn của đề. Sinh viên tự xác minh, quyết định sửa và tự nộp. |
+| **AI intervention point** | Sau khi Rule checker chạy xong và đã tách nội dung các mục được chỉ định; trước bước sinh viên xem kết quả và tự sửa. Chỉ áp dụng cho các mục cần đọc hiểu, không áp dụng cho tên file, thư mục, file bắt buộc, mục rỗng (đã do Rule làm). |
+| **Mức chọn** | Workflow có AI ở một bước hẹp (bước LLM tùy chọn, chỉ bật khi đạt bộ eval). |
+| **Rủi ro & người kiểm tra** | Rule thiếu quy tắc khi đề đổi → người viết bộ quy tắc kiểm lại theo `SUBMISSION.md` của từng bài. LLM báo nhầm, bỏ sót hoặc bịa tiêu chí → sinh viên đối chiếu từng cảnh báo với tiêu chí được trích; nhóm theo dõi tỷ lệ báo nhầm trong pilot. |
 
 **Thay đổi so với v0 và lý do:**
 
 | Trường | v0 | v1 | Vì sao đổi |
 |---|---|---|---|
-| Quy trình | Quy trình thuần túy mô tả các bước làm thủ công của sinh viên. | Bổ sung quy trình tự động hóa với 2 tầng: Tầng 1 Rule Engine và Tầng 2 LLM Validator. | Định hình chính xác kiến trúc kỹ thuật của giải pháp Workflow. |
-| AI intervention point | Chưa có trường này trong v0. | Xác định rõ: AI chỉ can thiệp vào khâu đọc hiểu ngữ nghĩa nội dung báo cáo. | Tránh việc lạm dụng AI cho việc kiểm tra tên file/folder vốn thuộc về Rule-based. |
-| Boundary & Fallback | Chỉ ghi nhận AI không được sửa file. | Bổ sung thêm cơ chế **Fallback timeout 15 giây** chuyển về offline mode khi mất mạng. | Đảm bảo tính khả thi và an toàn tuyệt đối cho sinh viên khi mạng lag sát deadline 23h59. |
+| Bottleneck | Hai bước tự kiểm tra, 15–35 phút | Thêm: phần mục có chữ nhưng chưa đạt không kiểm được bằng quy tắc cố định | Kết luận research mục 3.3 và so sánh 4 mức ở 6.2: đây là điểm duy nhất cần đọc hiểu |
+| Success Metric | (1) số bài sai quy cách, (2) thời gian rà soát | Thêm (3) chất lượng Rule và (4) chất lượng bước LLM | Câu hỏi PAIR: bỏ sót ở phần Rule tệ hơn; báo nhầm quá nhiều ở bước LLM làm sinh viên bỏ qua cảnh báo |
+| Boundary | Read-only, không tự commit/push/nộp | Thêm giới hạn riêng cho bước LLM: chỉ cảnh báo, không chặn nộp, không chấm nội dung, không bịa tiêu chí | Rủi ro mới khi thêm bước LLM |
+| AI intervention point, Mức chọn, Rủi ro & người kiểm tra | Chưa có | Như bảng trên | Yêu cầu của Problem Statement v1 |
 
-**Tiêu chí đánh giá đầu ra của AI (Eval Criteria):**
+**Tiêu chí đánh giá đầu ra của bước LLM:**
 
 | # | Tiêu chí | Đạt khi | Không đạt khi |
 |---:|---|---|---|
-| 1 | **Độ chính xác phát hiện cấu trúc (Structural Precision)** | Phát hiện chính xác 100% các lỗi sai tên file, sai tên repo, thừa/thiếu file bắt buộc theo quy định rubric. | Bỏ sót bất kỳ file sai quy cách nào hoặc báo sai tên file đang đúng. |
-| 2 | **Độ nhạy phát hiện mục rỗng (Completeness Recall)** | Phát hiện được 100% các mục tiêu đề trong file báo cáo mà nội dung bên dưới bị bỏ trống hoặc chỉ chứa văn bản template mẫu. | Bỏ sót mục chưa điền của sinh viên. |
-| 3 | **Độ tin cậy kiểm tra Metric (Metric Verification)** | Nhận diện đúng Success Metric có đủ con số Baseline, Target và Cách đo hay chưa. | Chấp nhận các metric chung chung như "nhanh hơn", "tiện hơn" là đạt. |
-| 4 | **Không bịa đặt tiêu chí (Zero Hallucination)** | 100% các tiêu chí cảnh báo đều trích dẫn chính xác từ file `RUBRIC.md` hoặc `SUBMISSION.md` của đề bài. | Tự nghĩ ra các quy tắc chấm điểm không có trong văn bản đề bài. |
-| 5 | **Thời gian phản hồi (Response Latency)** | Trả về toàn bộ kết quả phân tích trong vòng dưới 15 giây. | Thời gian xử lý vượt quá 30 giây gây chậm trễ cho sinh viên sát deadline. |
+| 1 | Có căn cứ | Mỗi cảnh báo trích đúng một yêu cầu có trong `CHECKPOINTS.md`, `RUBRIC.md` hoặc worksheet, kèm file và mục bị cảnh báo | Cảnh báo không kèm căn cứ hoặc không chỉ ra vị trí |
+| 2 | Không bịa tiêu chí | Mọi tiêu chí được trích đều tìm thấy nguyên văn trong các file hướng dẫn | Có tiêu chí không có trong file hướng dẫn |
+| 3 | Bắt được mục chưa đạt | Cảnh báo khi Success Metric thiếu baseline/target/cách đo, Boundary không nêu việc AI không được làm, Job Story hoặc Problem Statement lẫn giải pháp, câu hỏi phỏng vấn dạng "bạn có muốn…" | Bỏ qua một trong các lỗi trên |
+| 4 | Không báo nhầm mục đã đạt | Không cảnh báo mục đã đủ yêu cầu | Cảnh báo một mục đã đủ yêu cầu |
+| 5 | Giữ đúng phạm vi | Không chấm điểm, không nhận xét chất lượng nội dung ngoài các yêu cầu quy cách của đề | Nhận xét kiểu "phần reflection còn hời hợt", "nên viết hay hơn" |
 
-### Bộ dữ liệu Eval mẫu (10 Test Cases — Đạt chuẩn Bonus B3: +3 điểm)
+### Bộ dữ liệu Eval mẫu (10 cặp input / đầu ra mong đợi cho bước LLM)
 
-| Test # | Đầu vào (Input mẫu) | Đầu ra mong đợi (Expected Output) | Tiêu chí chấm (Eval Criteria) | Kết quả kiểm thử |
+**Đã chạy thật ngày 09/11/2026** với một prompt cố định, chấm từng ca theo 5 tiêu chí ở bảng trên. Kết quả: **10/10 đạt, không ca nào trượt tiêu chí 2 (bịa tiêu chí)** → điều kiện bật bước LLM ở mục 8.2 đã thỏa về mặt eval. Một lần chạy nháp với prompt chưa giới hạn phạm vi bị báo nhầm ở TC-02 và TC-10 (nhận xét chất lượng ngoài phạm vi); đã bổ sung quy tắc giới hạn phạm vi vào prompt rồi chạy lại. Đầu ra thật từng ca, prompt chốt và cách chấm: [report/assets/cp6-eval-run.md](../assets/cp6-eval-run.md). Giới hạn: 10 ca là dữ liệu mẫu tự soạn; tỷ lệ cảnh báo nhầm trên bài nộp thật vẫn đo trong pilot.
+
+| Test # | Đầu vào (mục được chỉ định) | Đầu ra mong đợi | Tiêu chí chấm | Kết quả |
 |---:|---|---|---|---|
-| TC-01 | File cá nhân tên `NguyenVanAn_20241234.md` | BÁO LỖI ĐỎ: Sai quy tắc đặt tên file. Tên đúng phải là `MSSV_HoTen.md` (ví dụ: `20241234_NguyenVanAn.md`). | Tiêu chí 1 | Đạt (Rule bắt đúng) |
-| TC-02 | Repo tên `K5-L3B-DAY02-NhomABC-ProblemFraming` | BÁO LỖI ĐỎ: Tên repo thiếu cụm từ `Discovery`. Tên đúng: `K5-L3B-DAY02-TenNhom-DiscoveryProblemFraming`. | Tiêu chí 1 | Đạt (Rule bắt đúng) |
-| TC-03 | File cá nhân mục 2 có bảng scan chỉ có 4 dòng problem | BÁO LỖI VÀNG: Chưa đủ số lượng tối thiểu. Cần ít nhất 5 dòng problem theo rubric CP1. | Tiêu chí 1 & 2 | Đạt (Rule đếm dòng) |
-| TC-04 | Dòng Job Story ghi: *"Khi làm bài lab, tôi muốn có chatbot AI để làm hộ bài"* | BÁO LỖI ĐỎ: Solution trá hình. Cột Job Story không được chứa từ khóa giải pháp 'chatbot AI'. | Tiêu chí 4 | Đạt (LLM phát hiện) |
-| TC-05 | Mục Success Metric ghi: *"Giúp sinh viên làm bài nhanh hơn và tiện lợi hơn"* | BÁO LỖI ĐỎ: Metric định tính không đo được. Thiếu Baseline và Target cụ thể. | Tiêu chí 3 | Đạt (LLM phát hiện) |
-| TC-06 | Mục Success Metric ghi: *"Giảm thời gian từ 20 phút (baseline) xuống dưới 5 phút (target)"* | KẾT QUẢ ĐẠT XANH: Metric hợp lệ, có đủ baseline và target đo lường được. | Tiêu chí 3 | Đạt (LLM chấp thuận) |
-| TC-07 | Mục 6.1–6.6 Reflection cá nhân chỉ viết 120 từ | BÁO LỖI ĐỎ: Dung lượng reflection chưa đạt. Rubric yêu cầu tối thiểu 200 từ cho các câu 6.1–6.6. | Tiêu chí 2 | Đạt (Rule đếm từ) |
-| TC-08 | Mục 6.7 Hiểu bài bị để trống nội dung | BÁO LỖI ĐỎ: Mục 6.7 (Hiểu bài) bắt buộc phải có nội dung để chấm tiêu chí C5 (6 điểm). | Tiêu chí 2 | Đạt (LLM phát hiện mục trống) |
-| TC-09 | Mục Boundary trong Problem Statement bị để trống | BÁO LỖI ĐỎ: Thiếu trường Boundary (Ranh giới AI không được làm gì & bước HITL). | Tiêu chí 2 | Đạt (LLM phát hiện) |
-| TC-10 | File `TEAM.md` có thành viên chưa điền phần cá nhân | BÁO LỖI VÀNG: Phát hiện mục `HoVaTen-MSSV` chưa được thay thế bằng thông tin cá nhân cụ thể. | Tiêu chí 2 | Đạt (Rule + LLM) |
+| TC-01 | Success Metric: *"Giúp sinh viên làm bài nhanh hơn và tiện hơn"* | Cảnh báo: thiếu baseline, target và cách đo; trích yêu cầu Success Metric trong `CHECKPOINTS.md` (CP5) | 1, 3 | **Đạt** — cảnh báo đúng cả 3 phần thiếu, trích nguyên văn [CP5-1] |
+| TC-02 | Success Metric: *"Thời gian rà soát từ 20 phút xuống dưới 5 phút, đo bằng bấm giờ 2 bài lab"* | Không cảnh báo | 4 | **Đạt** — không cảnh báo, nêu đủ 3 phần thỏa |
+| TC-03 | Success Metric: *"Giảm từ 6/30 bài lỗi xuống 1/30"* (không có cách đo) | Cảnh báo: thiếu cách đo | 1, 3 | **Đạt** — cảnh báo đúng thiếu cách đo |
+| TC-04 | Job Story: *"Khi làm bài lab, tôi muốn có chatbot AI để làm hộ bài"* | Cảnh báo: Job Story chứa giải pháp; trích yêu cầu CP1 trong `CHECKPOINTS.md` | 1, 3 | **Đạt** — cảnh báo đúng chứa "AI", "chatbot", trích [CP1-2] |
+| TC-05 | Job Story: *"Khi chuẩn bị báo cáo, tôi muốn có một công cụ tự động tóm tắt tài liệu, để tiết kiệm thời gian"* (không có từ "AI", "chatbot") | Cảnh báo: Job Story mô tả giải pháp ("công cụ tự động tóm tắt") thay vì việc khó | 3 | **Đạt** — bắt được giải pháp dù không có từ khóa AI, trích [WS-1] (ca khó nhất) |
+| TC-06 | Boundary: *"AI sẽ hỗ trợ người dùng một cách tốt nhất"* | Cảnh báo: chưa nêu AI không được làm gì và khi nào con người kiểm tra; trích yêu cầu CP5 | 1, 3 | **Đạt** — cảnh báo đúng thiếu 2 phần, trích [CP5-2] |
+| TC-07 | Boundary: *"AI không tự gửi, không tự sửa số liệu; PM duyệt trước khi gửi"* | Không cảnh báo | 4 | **Đạt** — không cảnh báo |
+| TC-08 | Problem Statement v0 có dòng *"Giải pháp: dùng LLM đọc rubric và chấm bài"* | Cảnh báo: Problem Statement chứa giải pháp; trích hướng dẫn Problem Statement trong worksheet | 1, 3 | **Đạt** — cảnh báo đúng chứa giải pháp, trích [WS-2] |
+| TC-09 | Câu hỏi phỏng vấn: *"Bạn có muốn dùng một công cụ kiểm tra tự động không?"* | Cảnh báo: câu hỏi dạng "Bạn có muốn…"; trích RUBRIC C7 (trừ 3 điểm) | 1, 2, 3 | **Đạt** — cảnh báo đúng dạng "Bạn có muốn…", trích [R-C7] nguyên văn |
+| TC-10 | Reflection 6.1 dài 250 từ, viết đúng trải nghiệm nhưng khá chung chung | Không cảnh báo (ngoài phạm vi quy cách; số từ đã do Rule kiểm) | 5 | **Đạt** — không cảnh báo, không nhận xét ngoài phạm vi (trượt ở lần chạy nháp, đã sửa prompt) |
 
 ---
 
@@ -429,42 +435,47 @@ Toàn bộ quy trình từ kiểm tra file đến xuất báo cáo là một lu�
 
 | Rủi ro | Câu hỏi | Mức độ rủi ro (Thấp = an toàn / TB / Cao = nguy hiểm) | Lý do / bằng chứng |
 |---|---|---|---|
-| **Value** | Người dùng có thật sự cần và sẽ dùng không? | **Thấp (Rất an toàn)** | 100% người được phỏng vấn đều thừa nhận đây là nỗi đau lớn và cấp bách sát mỗi deadline; sinh viên rất sợ bị trừ điểm oan vì lỗi hình thức. |
-| **Usability** | Người dùng có dùng được, có hiểu và sửa được đầu ra của AI không? | **Thấp (An toàn)** | Giao diện đầu ra chỉ là một bảng checklist màu xanh/đỏ rất trực quan, kèm số dòng và tên file cần sửa, sinh viên kỹ thuật đều đọc hiểu được ngay. |
-| **Feasibility** | Có đủ dữ liệu, công cụ, kỹ năng để làm không? | **Thấp (An toàn)** | Nhóm hoàn toàn làm chủ công nghệ: Tầng 1 là script Regex bằng Python/Bash; Tầng 2 là 1 API call LLM (dùng Gemini 1.5 Flash hoặc GPT-4o-mini) với prompt có định dạng JSON đầu ra nghiêm ngặt. |
-| **Viability** | Có hợp chi phí, pháp lý, quy định tổ chức không? Ai vận hành? | **Thấp (An toàn)** | - Chi phí cực thấp (< 0.002 USD cho mỗi lần quét bài nộp).<br>- Tính riêng tư cao: chỉ quét các file Markdown báo cáo học tập, không có dữ liệu cá nhân nhạy cảm.<br>- Không vi phạm quy định của nhà trường vì công cụ chỉ hỗ trợ kiểm tra quy cách trước khi nộp. |
+| **Value** | Người dùng có thật sự cần và sẽ dùng không? | **Trung bình** | Phần Rule có bằng chứng: 6/30 bài Day 01 sai tên file (TA), 3/3 sinh viên đúng actor mất 15–35 phút tự rà soát. Phần LLM chưa có bằng chứng: CP4 chưa có ai kể bị trừ điểm vì mục có chữ nhưng chưa đạt. Mẫu phỏng vấn nhỏ (5 người). |
+| **Usability** | Người dùng có dùng được, có hiểu và sửa được đầu ra của AI không? | **Thấp** | Đầu ra là danh sách lỗi kèm file, vị trí và tiêu chí trích nguyên văn; sinh viên vốn đã tự mở file và tự sửa (workaround ở CP4). Rủi ro còn lại: phải chạy một lệnh dòng lệnh. |
+| **Feasibility** | Có đủ dữ liệu, công cụ, kỹ năng để làm không? | **Trung bình** | Phần Rule dễ: công cụ có sẵn (pre-commit/pygrep) và quy tắc lấy từ `SUBMISSION.md`. Phần LLM: bộ eval 10 ca đã chạy đạt 10/10 với prompt cố định ngày 09/11/2026 (mục 7, file `cp6-eval-run.md`), nhưng là dữ liệu mẫu tự soạn — tỷ lệ báo nhầm trên bài nộp thật chưa biết, phải đo trong pilot. |
+| **Viability** | Có hợp chi phí, pháp lý, quy định tổ chức không? Ai vận hành? | **Trung bình** | Chưa hỏi giảng viên/TA có cho sinh viên dùng công cụ kiểm tra trước khi nộp không; chưa đo chi phí gọi LLM; chưa rõ ai cập nhật bộ quy tắc khi mỗi bài lab đổi yêu cầu. Dữ liệu là bài làm của sinh viên, không có thông tin cá nhân nhạy cảm ngoài MSSV và họ tên. |
 
 ### 8.2. Kết luận
 
-**Quyết định:** **GO (Triển khai ở phạm vi nhỏ: Workflow bán tự động)**
+**Quyết định:** **GO — phạm vi nhỏ**
 
-**Lý do:**
-1. Cả 4 rủi ro đều ở mức **Thấp (An toàn)**.
-2. Bài toán giải quyết nỗi đau có thật, cấp bách và đo lường được hiệu quả rõ rệt (giảm từ 20 phút xuống dưới 5 phút).
-3. Kiến trúc kỹ thuật tối ưu: Tận dụng Rule-based cho phần việc đơn giản và chỉ dùng AI cho việc đọc hiểu ngữ nghĩa, có cơ chế Fallback an toàn.
+**Lý do:** không có rủi ro ở mức Cao. Ba rủi ro Trung bình đều kiểm được ngay trong pilot mà không cần xây hệ thống lớn: Value của bước LLM và Feasibility của bước LLM được kiểm bằng bộ eval và pilot; Viability được kiểm bằng một câu hỏi với giảng viên/TA trước pilot.
 
-**Nếu Go — pilot nhỏ nhất:**
-Thử nghiệm chạy phiên bản CLI script cục bộ với 3 nhóm học viên trong lớp tại bài lab Day 03 sắp tới, đo lường tỷ lệ lỗi phát hiện được và khảo sát mức độ hài lòng của người dùng.
+**Pilot nhỏ nhất (2 bài lab tiếp theo):**
 
-**Nếu Not Yet — cần kiểm chứng gì trước:**
-*(Không áp dụng vì nhóm chọn Go)*.
+1. **Trước pilot:** hỏi giảng viên/TA có đồng ý cho sinh viên dùng công cụ kiểm tra quy cách trước khi nộp không (Viability).
+2. **Phần Rule:** viết bộ quy tắc từ `SUBMISSION.md` của bài lab đó (tên repo, tên file, thư mục, file bắt buộc, chuỗi template, mục rỗng, số từ), cho 3–5 nhóm tự nguyện chạy trước khi nộp.
+3. **Phần LLM:** chạy bộ 10 test case ở mục 7 với một prompt cố định. **Chỉ bật bước LLM trong pilot nếu đạt ≥ 8/10 và không ca nào trượt tiêu chí 2 (bịa tiêu chí).** Nếu không đạt, pilot chạy với Rule thuần. *(Đã chạy 09/11/2026: 10/10 đạt, 0 ca trượt tiêu chí 2 — `report/assets/cp6-eval-run.md`. Điều kiện bật bước LLM đã thỏa; giữ nguyên prompt chốt khi chạy pilot.)*
+4. **Đo:** số bài sai quy cách (theo kết quả chấm của TA), thời gian rà soát (sinh viên tự bấm giờ), số cảnh báo LLM bị sinh viên đánh dấu nhầm, số lỗi TA phát hiện mà công cụ bỏ sót.
 
-**Nếu No-Go — nên làm gì thay AI:**
-*(Không áp dụng vì nhóm chọn Go)*.
+**Nếu Not Yet — cần kiểm chứng gì trước:** *(không áp dụng — các điều kiện kiểm chứng đã nằm trong bước 1 và 3 của pilot).*
 
-**Ngưỡng dừng (Stop condition — Bắt buộc):**
-> *"Nếu sau 2 bài lab thử nghiệm tiếp theo (Day 03 và Day 04), tỷ lệ cảnh báo sai (False Positive) của công cụ vượt quá 20%, hoặc sinh viên phản hồi rằng vẫn phải mất hơn 10 phút để tự dò lại bằng mắt, nhóm sẽ lập tức dừng dự án và quay về phương án No AI: cung cấp một file checklist Excel chuẩn để sinh viên tự tích tay."*
+**Nếu No-Go — nên làm gì thay:** dùng checklist Markdown sinh từ `SUBMISSION.md` (No AI).
+
+**Ngưỡng dừng (Stop condition — bắt buộc):**
+
+> - *Nếu sau 2 bài lab pilot, bước LLM có hơn 2/10 cảnh báo bị sinh viên đánh dấu nhầm, hoặc có 1 cảnh báo trích tiêu chí không có trong hướng dẫn của đề → tắt bước LLM, giữ mức **Rule**.*
+> - *Nếu có lỗi tên file hoặc file bắt buộc mà TA phát hiện nhưng Rule không báo → dừng pilot, sửa bộ quy tắc trước khi dùng tiếp.*
+> - *Nếu sau 2 bài lab số bài sai quy cách của các nhóm pilot không giảm, hoặc thời gian rà soát vẫn trên 10 phút → quay về **No AI** (checklist Markdown).*
+> - *Nếu giảng viên/TA không đồng ý cho dùng công cụ → **No-Go**, dùng checklist Markdown.*
 
 ---
 
 ## 9. Hạn chế và hướng tiếp theo
 
-- **Hạn chế:** 
-  - Công cụ hiện tại tối ưu cho bài nộp dạng repository Git và file Markdown; chưa hỗ trợ tốt các bài nộp dạng file nén ZIP hoặc tài liệu Word/PDF.
-  - Phụ thuộc vào chất lượng kết nối Internet để gọi API LLM (dù đã có fallback offline nhưng tầng offline chỉ kiểm tra được tên file).
-- **Hướng phát triển tiếp theo:**
-  - Tích hợp thành một GitHub Action tự động chạy mỗi khi sinh viên tạo Pull Request trên repo fork của nhóm.
-  - Hỗ trợ cache các tiêu chí của rubric để giảm chi phí token và tăng tốc độ phản hồi xuống dưới 5 giây.
+- **Hạn chế:**
+  - Mẫu kiểm chứng nhỏ: 5 người phỏng vấn, 1 đợt chấm Day 01; chưa đủ để suy ra tỷ lệ lỗi ổn định.
+  - Giá trị của bước LLM chưa có bằng chứng từ người dùng; bộ eval 10 ca do nhóm tự soạn (đã chạy đạt 10/10 ngày 09/11/2026) chưa đo được hành vi trên bài nộp thật — phần này để pilot.
+  - Bộ quy tắc Rule phải viết lại cho từng bài lab khi `SUBMISSION.md` đổi yêu cầu.
+  - Chỉ áp dụng cho bài nộp dạng repo GitHub và file Markdown.
+- **Hướng tiếp theo:**
+  - Chạy pilot 2 bài lab theo mục 8.2 (bộ eval đã đạt 10/10, còn lại đo tỷ lệ cảnh báo nhầm trên bài nộp thật), rồi quyết định giữ hay tắt bước LLM.
+  - Nếu pilot tốt: chạy cùng bộ kiểm tra bằng GitHub Actions mỗi lần push vào repo nhóm, theo pattern autograding ở mục 3.3.
 
 ---
 
