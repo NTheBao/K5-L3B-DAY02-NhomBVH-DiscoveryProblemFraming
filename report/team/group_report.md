@@ -6,7 +6,7 @@
 ## 1. Thông tin nhóm
 
 - Tên nhóm: NhomBVH
-- Thành viên: xem `TEAM.md` (Nguyễn Thế Bảo, Vũ Xuân Hiếu, Bùi Văn Huy)
+- Thành viên: xem `TEAM.md` (Nguyễn Thế Bảo, Phạm Đức Vinh, Vũ Xuân Hiếu)
 - Candidate problem được chọn (1 câu): Khi chuẩn bị nộp bài tập lớn/bài lab môn học trước hạn chót 23h59, sinh viên muốn tự động đối chiếu cấu trúc thư mục, quy tắc đặt tên file và nội dung các trường bắt buộc với rubric của đề bài, để không bị trừ điểm oan vì sai format nộp bài.
 - Quyết định cuối: **Go (ở phạm vi nhỏ: Workflow bán tự động kết hợp Rule-based script và LLM validator)**
 
@@ -16,65 +16,89 @@
 
 ### 2.1. Pitch
 
+Mỗi thành viên pitch top 3 Problem Card trong báo cáo cá nhân (`report/individual/`). Không dùng AI ở bước này.
+
 | # | Người đưa ra | Candidate (Job Story ngắn) | Actor | Bottleneck | Câu hỏi phản biện nhận được (ai hỏi) |
 |---:|---|---|---|---|---|
-| 1 | Vũ Xuân Hiếu | Khi chuẩn bị nộp bài lab trước 23h59, tôi muốn tự động đối chiếu cấu trúc thư mục và quy tắc đặt tên file với rubric, để không bị trừ điểm oan vì sai format. | Sinh viên làm lab | Bước dò tay từng file và đối chiếu trường thông tin (mất 20 phút lúc đêm muộn). | Viết một shell script hay python regex có kiểm tra được hết không mà cần AI? (Thế Bảo hỏi) |
-| 2 | Vũ Xuân Hiếu | Khi đến hạn nộp PR cuối sprint, tôi muốn tự động kiểm tra docstring và commit style, để không bị lead reject PR vì lỗi chính tả. | Lập trình viên | Tự đọc soát git diff thủ công (10 phút) và sửa lại khi bị reject (10 phút). | Linter (Flake8/ESLint) và pre-commit hook đã giải bài này rồi, AI chen vào đâu? (Văn Huy hỏi) |
-| 3 | Vũ Xuân Hiếu | Khi chuẩn bị seminar lab hàng tuần, tôi muốn trích xuất bảng số liệu ablation study từ paper 10 trang, để làm slide trong 30 phút. | Sinh viên nghiên cứu | Đọc hiểu và tổng hợp bảng kết quả thực nghiệm phức tạp (mất 60 phút). | Bảng biểu trong PDF rất đa dạng bố cục (2 cột, scan ảnh), liệu độ chính xác có đảm bảo không? (Thế Bảo hỏi) |
-| 4 | Nguyễn Thế Bảo | Khi chuẩn bị báo cáo tuần cho mentor, tôi muốn tổng hợp các commit và issue đã đóng trong tuần trên GitHub, để không phải lục lại lịch sử làm việc. | Trưởng nhóm dev | Mất 30 phút lục lại các repo và kênh chat để nhớ việc đã làm. | Có công cụ GitHub digest hoặc bot Slack tạo summary sẵn chưa? (Xuân Hiếu hỏi) |
-| 5 | Nguyễn Thế Bảo | Khi tiếp nhận một dataset mới tải về, tôi muốn quét nhanh các giá trị null, định dạng sai và phân phối dữ liệu, để lên kế hoạch tiền xử lý trong 15 phút. | Kỹ sư dữ liệu/AI | Viết các đoạn code kiểm tra EDA lặp lại cho từng cột (45 phút). | Thư viện ydata-profiling chỉ mất 1 dòng code là ra báo cáo đầy đủ, sao phải làm thêm? (Văn Huy hỏi) |
-| 6 | Nguyễn Thế Bảo | Khi thảo luận đồ án qua Google Meet, tôi muốn tự động trích xuất các quyết định chính và người nhận task, để gửi biên bản họp ngay sau cuộc gọi. | Thư ký nhóm | Nghe lại bản ghi âm và ghi chép lại các đầu việc (30 phút). | Tính năng tóm tắt họp của Zoom/Google Workspace đã có sẵn, ta có cạnh tranh được không? (Xuân Hiếu hỏi) |
-| 7 | Bùi Văn Huy | Khi nhận feedback chấm điểm từ giảng viên trên LMS, tôi muốn phân loại các tiêu chí bị trừ điểm, để nhóm tập trung sửa cho bài nộp sau. | Thành viên nhóm | Đọc file PDF chấm điểm dài và lọc ra các lỗi nhóm mắc phải (20 phút). | Mỗi môn học một mẫu chấm điểm khác nhau, tần suất 1 kỳ chỉ có 2-3 đợt, có quá ít không? (Thế Bảo hỏi) |
-| 8 | Bùi Văn Huy | Khi tìm kiếm tài liệu tham khảo cho môn học, tôi muốn lọc ra các tài liệu đúng phiên bản thư viện đang dùng (ví dụ PyTorch 2.x), để không học theo code cũ lỗi thời. | Sinh viên tự học | Mở nhiều trang web và chạy thử code mẫu bị lỗi deprecation (60 phút). | Nỗi đau này có giải quyết triệt để được bằng cách filter từ khóa trên Google không? (Xuân Hiếu hỏi) |
-| 9 | Bùi Văn Huy | Khi chia task làm bài tập nhóm, tôi muốn gợi ý phân công công việc dựa trên thế mạnh của từng thành viên, để hoàn thành dự án đúng hạn. | Nhóm trưởng | Họp bàn phân chia việc và thương lượng ai làm phần nào (45 phút). | Việc phân công phụ thuộc nhiều vào yếu tố con người và giao tiếp thực tế, AI có nắm được ngữ cảnh không? (Xuân Hiếu hỏi) |
+| 1 | Vũ Xuân Hiếu | Khi chuẩn bị nộp bài lab trước 23h59, tôi muốn đối chiếu cấu trúc thư mục, tên file và các trường bắt buộc với rubric, để không bị trừ điểm oan vì sai format. | Sinh viên làm lab | Bước 2–3: dò tay tên file/thư mục và trường bắt buộc (~20 phút, lúc đêm muộn). | "Viết shell script hay Python regex là kiểm tra được, sao cần AI?" (Thế Bảo hỏi) · "Con số 6 bạn bị trừ điểm ở Day 01 lấy từ đâu, có bảng điểm không?" (Đức Vinh hỏi) |
+| 2 | Vũ Xuân Hiếu | Khi đến hạn sprint, tôi muốn kiểm tra nhanh docstring, commit message và style code, để không bị tech lead reject PR vì lỗi định dạng vụn vặt. | Lập trình viên | Bước 2: tự đọc soát git diff (10 phút) và bước 5: sửa lại khi bị reject (10 phút). | "Pre-commit hook với Flake8/Black đã chặn được lỗi format, phần còn lại là gì?" (Đức Vinh hỏi) |
+| 3 | Vũ Xuân Hiếu | Khi chuẩn bị seminar lab hàng tuần, tôi muốn trích xuất đóng góp chính và bảng benchmark/ablation từ paper 10–15 trang, để làm dàn ý trong 45 phút. | Sinh viên nghiên cứu | Bước 4: dò và chép số liệu từ bảng benchmark/ablation trong PDF 2 cột (75 phút). | "Tỷ lệ sai 25% đo từ 4 buổi seminar, mẫu có quá nhỏ không? Kiểm chứng trong một buổi lab bằng cách nào?" (Thế Bảo hỏi) |
+| 4 | Phạm Đức Vinh | Khi đã tải danh sách hóa đơn từ cổng hoadondientu, tôi muốn đối chiếu với số liệu trong phần mềm kế toán, để biết hóa đơn nào chưa hạch toán hoặc sai số tiền. | Kế toán dịch vụ (~6 MST) | Bước 3: dò từng dòng hóa đơn mua vào giữa 2 file bằng mắt (~60 phút/tháng cho 6 MST). | "Số liệu 6 MST và 14 hóa đơn sót là thật hay giả định? Nếu XLOOKUP là đủ thì bài còn đáng đào sâu không?" (Xuân Hiếu hỏi) |
+| 5 | Phạm Đức Vinh | Khi tới kỳ kê khai, tôi muốn tải đủ hóa đơn mua vào/bán ra của tháng từ cổng hoadondientu, để có bộ chứng từ đầy đủ trước khi lập tờ khai. | Kế toán dịch vụ (~6 MST) | Bước 3: tải XML từng hóa đơn (~20 giây × 450 hóa đơn ≈ 150 phút/tháng). | "Phần mềm kế toán đang dùng đã có chức năng lấy hóa đơn hàng loạt từ cơ quan thuế chưa?" (Thế Bảo hỏi) |
+| 6 | Phạm Đức Vinh | Khi lấy hóa đơn mua vào từ cổng, tôi muốn biết hóa đơn còn hợp lệ không (trạng thái hóa đơn, người bán còn hoạt động), để không bị loại thuế được khấu trừ. | Kế toán dịch vụ, giám đốc | Bước 3: tra MST người bán ở trang tra cứu riêng (~1,5 phút/hóa đơn). | "Bao nhiêu % nhà cung cấp lặp lại hằng tháng? Nếu cao thì chỉ cần tra nhà cung cấp mới." (Xuân Hiếu hỏi) |
+| 7 | Nguyễn Thế Bảo | Khi nhận yêu cầu chỉnh sửa từ khách hàng nhiều lần, tôi muốn theo dõi các thay đổi, để tránh bỏ sót yêu cầu. | Dev, BA | Bước 3–4: đọc lại nhiều nguồn và cập nhật thủ công (10–20 phút/lần thay đổi). | "Lần gần nhất bỏ sót yêu cầu là khi nào, mất bao lâu sửa? Con số 2–3 lần/tuần có ghi chép không?" (Đức Vinh hỏi) |
+| 8 | Nguyễn Thế Bảo | Khi khách hàng thay đổi yêu cầu qua nhiều cuộc họp, tôi muốn đối chiếu yêu cầu ban đầu và yêu cầu mới, để xác định chính xác điểm thay đổi. | BA | Bước 5: so sánh thủ công nội dung tài liệu cũ và mới (30–60 phút/lần). | "Word Compare đã làm được việc này, AI thêm được gì? Tài liệu khách hàng có được phép đưa lên AI không?" (Xuân Hiếu hỏi) |
+| 9 | Nguyễn Thế Bảo | Khi Tester phát hiện lỗi nhưng mô tả chưa đủ thông tin, tôi muốn có đủ dữ liệu tái hiện lỗi, để xử lý chính xác. | Tester, Dev | Bước 6: Dev hỏi lại Tester để bổ sung thông tin (10–15 phút/bug). | "Chỉ cần template bug report bắt buộc các trường thì đã giảm được một nửa thời gian chưa?" (Đức Vinh hỏi) |
 
 ### 2.2. Cluster
 
 | Cluster | Các candidate | Pattern chung |
 |---|---|---|
-| **A: Đảm bảo quy chuẩn bàn giao học thuật & bài nộp** | #1 (Kiểm tra quy cách nộp bài), #7 (Phân loại feedback chấm điểm) | Cùng liên quan đến việc đối chiếu sản phẩm học tập với các bộ tiêu chí đánh giá (rubric, quy chuẩn nộp bài của trường/môn học) để tránh rủi ro mất điểm. |
-| **B: Tối ưu hóa chu kỳ phát triển mã nguồn & kỹ thuật** | #2 (Kiểm tra PR checklist), #5 (Tự động hóa EDA dataset) | Các tác vụ kỹ thuật lặp lại trong quy trình dev/data, có thể giải quyết bằng các công cụ tự động hóa hoặc script rule-based. |
-| **C: Tổng hợp và truyền thông thông tin nhóm** | #3 (Trích xuất paper), #4 (Tổng hợp commit tuần), #6 (Biên bản họp), #8 (Lọc tài liệu), #9 (Phân chia task) | Cần đọc, tóm tắt và chuyển ngữ cảnh từ nhiều nguồn văn bản phi cấu trúc thành các đầu việc hành động. |
+| **A: Kiểm tra sản phẩm theo bộ tiêu chí trước khi bàn giao** | #1 (quy cách bài nộp), #2 (PR checklist), #9 (bug report thiếu thông tin) | Có sẵn một bộ tiêu chí cố định (rubric, quy ước code, mẫu bug report); người làm tự dò tay trước khi bàn giao nên sót lỗi nhỏ và bị trả về. |
+| **B: Đối chiếu hai nguồn để tìm chênh lệch** | #4 (hóa đơn cổng – phần mềm kế toán), #7 (theo dõi yêu cầu chỉnh sửa), #8 (đối chiếu yêu cầu qua nhiều cuộc họp) | Cùng một thông tin nằm ở hai nơi (hai file, hai phiên bản tài liệu); so khớp bằng mắt nên bỏ sót điểm khác nhau. |
+| **C: Thu thập và xác minh lặp lại trên hệ thống bên ngoài** | #5 (tải hóa đơn từ cổng), #6 (kiểm tra hóa đơn hợp lệ) | Thao tác tra cứu/tải lặp lại cho từng chứng từ trên cổng của cơ quan khác (đăng nhập, captcha), nên chỉ làm được một phần. |
+| **D: Trích xuất số liệu từ tài liệu dài, phi cấu trúc** | #3 (bảng benchmark/ablation trong paper) | Số liệu nằm trong bảng PDF phức tạp; đọc dò dễ nhầm dòng, nhầm cột. |
 
 ### 2.3. Opportunity Solution Tree rút gọn
 
 Gốc là **1 outcome**. Nhánh là **opportunity** (nhu cầu, pain), không phải tính năng hay công cụ.
 
 ```text
-OUTCOME: Giảm 60% thời gian rà soát và loại bỏ 100% lỗi sai sót định dạng trước mỗi mốc bàn giao học tập/dự án
-├── Opportunity A: Khó đối chiếu độ chuẩn xác giữa quy cách cấu trúc bài làm và rubric môn học trước hạn chót
-├── Opportunity B: Tốn nhiều thời gian đọc soát thủ công các lỗi định dạng và tài liệu code trước khi tạo PR
-└── Opportunity C: Khó tổng hợp nhanh các đóng góp và số liệu thực nghiệm từ tài liệu học thuật dài
+OUTCOME: Giảm số lần sản phẩm bị trả về, bị trừ điểm hoặc phải làm lại
+         vì những lỗi lẽ ra phát hiện được trước khi bàn giao (đếm số lần/tháng)
+├── Opportunity A: Bộ tiêu chí dài, người làm dò tay lúc sát hạn nên sót lỗi nhỏ
+│   ├── Phải đọc lại rubric/quy chuẩn mỗi lần nộp vì yêu cầu đổi theo từng bài
+│   └── Dò tên file, thư mục và trường bắt buộc khi mệt dễ sót ký tự (`_` thành `-`, quên sửa MSSV)
+├── Opportunity B: Hai nguồn dữ liệu sắp xếp khác nhau, so khớp bằng mắt bỏ sót chênh lệch
+├── Opportunity C: Tra cứu lặp lại trên cổng bên ngoài cho từng chứng từ nên chỉ kiểm được một phần
+└── Opportunity D: Số liệu trong bảng của tài liệu dài dễ đọc nhầm dòng, nhầm cột
 ```
 
 Những ý đã gạch bỏ vì là solution đội lốt opportunity:
 
-- ~~"Xây dựng bot Discord tự động chạy script chấm bài kiểm tra format"~~ (Đây là giải pháp công cụ, opportunity thực tế là: *Khó đối chiếu cấu trúc thư mục với rubric*).
-- ~~"Tạo trợ lý AI đọc paper sinh ra slide PowerPoint"~~ (Đây là giải pháp, opportunity thực tế là: *Khó tổng hợp nhanh số liệu thực nghiệm từ tài liệu dài*).
-- ~~"Xây dựng hệ thống nhắc task thông minh qua Telegram"~~ (Đây là giải pháp, opportunity thực tế là: *Hay bị sót các đầu việc cam kết sau cuộc họp*).
+- ~~"Bot Discord tự chạy script kiểm tra format bài nộp"~~ → là công cụ; pain thật là *dò tay tên file và trường bắt buộc khi mệt dễ sót* (Opportunity A).
+- ~~"LLM đọc rubric tự sinh checklist"~~ → là giải pháp; pain thật là *phải đọc lại rubric mỗi lần nộp* (Opportunity A).
+- ~~"Macro Excel/XLOOKUP so khớp hóa đơn"~~ → là giải pháp; pain thật là *so khớp hai nguồn bằng mắt bỏ sót chênh lệch* (Opportunity B).
+- ~~"Trợ lý AI đọc paper sinh slide"~~ → là giải pháp; pain thật là *số liệu trong bảng dễ đọc nhầm* (Opportunity D).
 
 ### 2.4. Chấm điểm shortlist (1–5)
 
+Shortlist lấy card mạnh nhất của mỗi thành viên.
+
 | Candidate | Actor rõ | Quy trình rõ | Pain có bằng chứng | Impact đo được | Vừa sức lab | So sánh được No AI/Rule/Workflow/Agent | Nhóm hiểu domain | Tổng |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| **Candidate 1: Rà soát quy cách bài nộp theo rubric** | 5 | 5 | 5 | 5 | 5 | 5 | 5 | **35/35** |
-| **Candidate 2: Kiểm tra định dạng code & PR checklist** | 4 | 5 | 4 | 4 | 4 | 4 | 4 | **29/35** |
-| **Candidate 3: Trích xuất thông tin bài báo khoa học** | 4 | 3 | 4 | 4 | 3 | 4 | 4 | **26/35** |
+| **#1 Rà soát quy cách bài nộp theo rubric** (Hiếu) | 5 | 4 | 4 | 3 | 5 | 5 | 5 | **31/35** |
+| **#4 Đối chiếu hóa đơn cổng – phần mềm kế toán** (Vinh) | 5 | 5 | 3 | 5 | 3 | 4 | 2 | **27/35** |
+| **#9 Bug report thiếu thông tin** (Bảo) | 4 | 4 | 2 | 3 | 4 | 5 | 3 | **25/35** |
+
+Lý do các điểm thấp:
+
+- **#1:** Quy trình 4/5 vì bước 4–5 (push, nộp LMS) chưa đo thực tế. Pain 4/5: có sự kiện thật (≥6 bạn bị trừ điểm ở Day 01) nhưng tỷ lệ "sót lỗi 15%" chưa có nguồn. Impact 3/5: "trừ 5–10% điểm" chưa trích từ rubric thật, target "0% lỗi" là tuyệt đối → cần sửa ở CP4–CP5.
+- **#4:** Pain 3/5 vì số liệu (6 MST, 14 hóa đơn sót, 18 triệu khấu trừ chậm) là giả định minh họa. Vừa sức lab 3/5 và domain 2/5: cả nhóm là sinh viên, không phỏng vấn được kế toán thật trong buổi lab.
+- **#9:** Pain 2/5 và impact 3/5: thời gian 10–15 phút/bug và tỷ lệ bug thiếu thông tin đều là ước tính, chưa có baseline.
 
 **Candidate được chọn:**
-Candidate #1: *Rà soát quy cách bài nộp và tự động đối chiếu checklist rubric trước deadline.*
+Candidate #1: *Rà soát quy cách bài nộp theo rubric trước deadline.*
 
 **Vì sao chọn:**
-1. **Nỗi đau thật và cấp bách:** Cả 3 thành viên trong nhóm và các bạn học trong lớp đều vừa trải qua nỗi sợ bị trừ điểm oan ở Day 01 vì các lỗi quy chuẩn đặt tên file, cấu trúc thư mục, thiếu trường thông tin.
-2. **Quy trình cực kỳ rõ ràng:** Đầu vào là file rubric (`RUBRIC.md`, `SUBMISSION.md`) và cây thư mục bài làm; đầu ra là bảng checklist Đạt/Không đạt.
-3. **Phù hợp hoàn hảo để so sánh 4 mức can thiệp:** Bài toán này ép nhóm phải tư duy: *Đến đâu thì dùng Rule (script kiểm tra file name, tree structure)? Đến đâu mới cần LLM (đọc hiểu nội dung file báo cáo xem có thực sự trả lời đúng câu hỏi hay chỉ để template)?* Điều này tránh được cái bẫy "lạm dụng AI".
+
+1. **Pain có sự kiện thật và kiểm chứng được ngay:** ở bài lab Day 01 có ít nhất 6 bạn trong lớp bị trừ điểm vì sai tên repo hoặc file con; nhóm có thể hỏi/survey bạn cùng lớp ngay trong buổi lab (CP4).
+2. **Bottleneck cụ thể:** bước 2–3, dò tay tên file/thư mục và các trường bắt buộc, ~20 phút, làm lúc đêm muộn sát 23h59.
+3. **Cả nhóm hiểu domain:** cả 3 thành viên đều là người nộp bài, đầu vào có sẵn trong repo (`RUBRIC.md`, `SUBMISSION.md`, cây thư mục bài làm).
+4. **Ép nhóm so sánh đủ 4 mức can thiệp:** phần kiểm tra tên file, cấu trúc thư mục là Rule thuần; chỉ phần kiểm tra nội dung trường bắt buộc có thực sự được điền (không còn template) mới có thể cần LLM. Bài toán này tránh được bẫy "lạm dụng AI".
 
 **Vì sao loại các candidate còn lại:**
-- *Loại Candidate 2 (PR checklist):* Các công cụ linter tiêu chuẩn công nghiệp (Flake8, ESLint, Prettier, Husky pre-commit) đã giải quyết quá tốt phần lớn bài toán bằng Rule thuần túy, không gian để AI tạo ra giá trị mới không nhiều và dễ bị dư thừa.
-- *Loại Candidate 3 (Trích xuất paper):* Cấu trúc PDF bài báo học thuật quá phức tạp (bố cục 2 cột, công thức LaTeX, bảng chèn hình ảnh), độ mơ hồ và rủi ro kỹ thuật (Feasibility Risk) quá cao, vượt quá phạm vi có thể kiểm chứng và ra quyết định trong một buổi lab 4 tiếng.
 
-**Xử lý bất đồng (nếu có):**
-Ban đầu thành viên Thế Bảo cho rằng Candidate #1 chỉ cần viết một script Bash/Python là xong trong 15 phút, không cần AI. Sau khi thảo luận, nhóm đã phân tích rõ: Script chỉ kiểm tra được *sự tồn tại và tên file* (phần vỏ), nhưng không thể kiểm tra được *nội dung bên trong file có thực sự đạt chuẩn hay không* (ví dụ: mục Success Metric có đủ baseline và target không, hay học viên chỉ ghi "nhanh hơn tiện hơn"). Do đó, nhóm thống nhất bài toán này cần kết hợp **Rule (kiểm tra cấu trúc) + AI (kiểm tra nội dung ngữ nghĩa)**.
+- *Loại #4 (đối chiếu hóa đơn, Vinh):* card viết chặt chẽ nhất, metric rõ nhất, nhưng số liệu là giả định minh họa và nhóm không tiếp cận được kế toán thật để kiểm chứng trong buổi lab. Chính card đã tự kết luận mức **Rule** (XLOOKUP/Power Query), nên không còn nhiều điều để so sánh giữa các mức.
+- *Loại #9 (bug report, Bảo):* toàn bộ số liệu là ước tính, chưa có baseline; phương án No AI (template bug report bắt buộc các trường) nhiều khả năng đã giải phần lớn bài toán.
+- *Loại #2 (PR checklist, Hiếu):* linter và pre-commit hook (Flake8, Black, ESLint) đã giải gần hết bằng Rule.
+- *Loại #3 (trích xuất paper, Hiếu):* rủi ro Feasibility cao (PDF 2 cột, bảng xoay, ký hiệu toán học), tỷ lệ sai 25% chỉ đo trên 4 buổi seminar, không kiểm chứng và ra quyết định được trong một buổi lab.
+- *Loại #5, #6, #7, #8:* #5 có thể đã có chức năng tải hàng loạt trong phần mềm kế toán (No AI); #6 giải được bằng danh sách nhà cung cấp đã tra; #7, #8 thiếu bằng chứng thật và #8 vướng bảo mật tài liệu khách hàng.
+
+**Xử lý bất đồng:**
+
+- Thế Bảo cho rằng Candidate #1 chỉ cần một script Bash/Python, không cần AI. Nhóm thống nhất: script kiểm tra được *sự tồn tại và tên file* (phần vỏ), nhưng không kiểm tra được *nội dung trường bắt buộc có thực sự được điền hay vẫn là template* (ví dụ mục Success Metric có baseline và target không). Vì vậy giữ hướng **Rule (cấu trúc) trước, chỉ thêm AI (nội dung) nếu Rule không đủ** và để CP6 quyết định.
+- Đức Vinh cho rằng #4 có bằng chứng và metric tốt hơn. Nhóm đồng ý về chất lượng card, nhưng chọn #1 vì tiêu chí "kiểm chứng được trong buổi lab" và "nhóm hiểu domain" quan trọng hơn ở giai đoạn Define.
 
 ---
 
