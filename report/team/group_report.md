@@ -358,7 +358,7 @@ Toàn bộ quy trình từ kiểm tra file đến xuất báo cáo là một lu�
 | **Prediction** — AI dự đoán / tạo ra gì? | Đọc nội dung file báo cáo và dự đoán xem từng trường bắt buộc (Actor, Bottleneck, Metric, Boundary...) đã đạt yêu cầu theo Rubric hay chưa (Đạt / Chưa đạt / Thiếu dữ liệu). |
 | **Judgment** — con người cân nhắc, quyết định gì? | Sinh viên xem danh sách các cảnh báo màu vàng/đỏ và tự quyết định: có cần sửa lại nội dung file bài làm của mình trước khi nộp hay không. |
 | **Action** — hành động cuối cùng là gì, ai làm? | Sinh viên tự chỉnh sửa nội dung file trên máy tính và bấm xác nhận push Git để nộp bài. |
-| **Outcome** — đo kết quả bằng gì? | Tỷ lệ bài nộp bị trừ điểm quy chuẩn/format trong lớp giảm về 0%; thời gian rà soát trước deadline dưới 5 phút. |
+| **Outcome** — đo kết quả bằng gì? | Số bài nộp bị trừ điểm quy chuẩn/format trong lớp giảm từ mốc tham chiếu 6/30 xuống ≤ 1/30; thời gian rà soát checklist trước deadline giảm từ ~20 phút xuống dưới 5 phút. |
 | **Input** — AI cần dữ liệu đầu vào gì mỗi lần chạy? Có sẵn không? | File `RUBRIC.md` của đề bài và nội dung các file báo cáo Markdown trong thư mục `report/`. Dữ liệu này luôn có sẵn cục bộ trên máy sinh viên. |
 | **Feedback** — lấy phản hồi ở đâu để cải thiện? | Phản hồi từ nút bấm của sinh viên ("Tôi đã sửa" hoặc "Bỏ qua cảnh báo này") và bảng điểm chính thức do giảng viên công bố sau đó. |
 
@@ -381,8 +381,8 @@ Toàn bộ quy trình từ kiểm tra file đến xuất báo cáo là một lu�
 | **Actor** | Sinh viên và nhóm sinh viên thực hành các môn học công nghệ/AI tại trường đại học trước mỗi kỳ hạn nộp bài lab. |
 | **Quy trình** | Sinh viên chạy công cụ kiểm tra ➔ Rule Engine quét tên file & repo ➔ LLM Validator quét ngữ nghĩa nội dung ➔ Sinh viên duyệt bảng checklist (HITL) ➔ Push Git nộp bài. |
 | **Bottleneck** | Khâu rà soát thủ công các lỗi định dạng và tính đầy đủ của nội dung báo cáo sát deadline đêm muộn (mất 20 phút). |
-| **Impact** | Nguy cơ bị trừ 5–10% tổng số điểm môn học do sai quy chuẩn hình thức dù nội dung chuyên môn làm tốt. |
-| **Success Metric** (baseline → target, cách đo) | Giảm thời gian rà soát từ 20 phút (baseline) xuống dưới 5 phút (target); giảm tỷ lệ bài nộp sai quy cách từ 20% xuống 0%. Đo bằng bấm giờ thực tế và điểm số format của lớp. |
+| **Impact** | Bị trừ 5 điểm trực tiếp vào điểm tổng kết bài lab theo quy tắc chấm của rubric (do sai tên repo, tên file hoặc giữ nguyên template) hoặc bị 0 điểm phần nộp bài nếu thiếu file bắt buộc (`group_report.md`, `TEAM.md`). |
+| **Success Metric** (baseline → target, cách đo) | **Baseline:** 6/30 bài Day 01 sai quy chuẩn đặt tên file theo thông tin trợ giảng; thời gian tự rà soát thủ công của 3 sinh viên đúng actor được phỏng vấn là 15–35 phút/lần (trung bình ~20 phút). **Target pilot:** giảm số bài sai quy cách từ mốc tham chiếu 6/30 xuống ≤ 1/30 bài; rút ngắn thời gian chạy và rà soát checklist xuống dưới 5 phút. **Cách đo:** bấm giờ từ khi chạy công cụ đến khi duyệt xong checklist; đối chiếu với kết quả chấm điểm quy chuẩn của TA/giảng viên ở các bài lab tiếp theo (Day 03, Day 04). |
 | **Boundary** | AI chỉ được đọc (`read-only`), tuyệt đối không tự sửa file hoặc tự ý nộp bài. Phải có cơ chế Fallback timeout 15 giây chuyển về Rule-based offline khi mất mạng. |
 | **AI intervention point** | Chen vào bước phân tích ngữ nghĩa nội dung các file báo cáo Markdown: so khớp nội dung từng mục với tiêu chí rubric tương ứng để tìm mục rỗng hoặc metric định tính. |
 | **Mức chọn** | **Workflow bán tự động** (Rule Engine + LLM Validator + HITL). |
