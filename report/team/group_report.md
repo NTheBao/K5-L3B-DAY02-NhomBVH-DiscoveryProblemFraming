@@ -108,25 +108,29 @@ Candidate #1: *Rà soát quy cách bài nộp theo rubric trước deadline.*
 
 | # | Giả định | Loại (Value / Usability / Feasibility / Viability) | Quan trọng (1–5) | Đã có bằng chứng (1–5) | Kiểm chứng trước? |
 |---:|---|---|---:|---:|---|
-| 1 | Sinh viên thực sự mất nhiều thời gian và hay bị trừ điểm oan vì lỗi format nộp bài hơn là vì nội dung chuyên môn. | Value | 5 | 4 | Có (kiểm chứng ngay) |
-| 2 | Sinh viên sẵn sàng chạy một công cụ kiểm tra tự động trước khi nộp bài thay vì tự dò bằng mắt. | Usability | 4 | 4 | Có |
-| 3 | LLM có thể đọc rubric môn học bất kỳ và hiểu chính xác các tiêu chí chấm điểm mà không bịa đặt (hallucinate). | Feasibility | 5 | 2 | Có (Rất quan trọng, ít bằng chứng) |
-| 4 | Một script Rule-based thông thường không đủ để kiểm tra chất lượng các trường văn bản trong báo cáo. | Value / Feasibility | 4 | 3 | Có |
-| 5 | Chi phí gọi API LLM cho mỗi lần rà soát bài nộp đủ rẻ để sinh viên/trường học chấp nhận được (< 0.01 USD/lần). | Viability | 3 | 4 | Không (đã biết chi phí LLM hiện tại rất rẻ) |
+| 1 | Sinh viên trong lớp thực sự bị trừ điểm hoặc bị nhắc vì sai quy cách nộp bài (tên file, cấu trúc thư mục, thiếu file, mục bắt buộc để trống) ở các bài lab gần đây. | Value | 5 | 3 | **Có — kiểm trước** (mới có sự kiện Day 01 "≥6 bạn bị trừ điểm", chưa có bảng điểm hay feedback làm bằng chứng) |
+| 2 | Bước tự dò tên file và các mục bắt buộc mất ≥15 phút mỗi lần nộp và thường làm sát hạn 23h59. | Value | 4 | 2 | **Có** (mới có ước tính 20 phút của người đưa card) |
+| 3 | Phần lớn lỗi quy cách bắt được bằng Rule (script kiểm tên file, cấu trúc thư mục, tìm chữ template chưa sửa); chỉ phần nhỏ cần đọc hiểu nội dung. | Feasibility | 5 | 2 | **Có** — giả định này quyết định mức can thiệp ở CP6 |
+| 4 | Sinh viên sẽ tự chạy một bước kiểm tra trước khi nộp nếu bước đó mất dưới 3 phút. | Usability | 4 | 1 | Có (hỏi về hành vi đã có: đã từng tự kiểm bằng checklist/script nào chưa) |
+| 5 | Giảng viên/TA đồng ý cho sinh viên dùng bộ kiểm tra quy cách trước khi nộp. | Viability | 3 | 1 | Không — để CP6 |
+| 6 | LLM đọc rubric và liệt kê đúng các file, mục bắt buộc mà không bịa thêm yêu cầu. | Feasibility | 4 | 1 | Không — chỉ cần kiểm nếu giả định #3 sai |
 
-Giả định nhóm kiểm chứng trong buổi này:
-- **Giả định #1:** Sinh viên có thực sự gặp nỗi đau bị trừ điểm format và cảm thấy căng thẳng khi rà soát thủ công trước hạn chót?
-- **Giả định #3 & #4:** Sinh viên cần công cụ hỗ trợ ở mức nào: Chỉ kiểm tra tên file (Rule) hay cần đọc hiểu nội dung báo cáo (AI)?
+Giả định nhóm kiểm chứng trong buổi này (quan trọng cao, bằng chứng thấp):
+
+- **#1 và #2 (Value):** pain có thật và đủ lớn không? Hỏi về lần nộp bài gần nhất, số phút, lần bị trừ điểm gần nhất.
+- **#3 (Feasibility):** lỗi thật sự gặp là loại nào? Nếu đa số là sai tên file/thiếu file thì Rule là đủ; chỉ khi có nhiều lỗi kiểu "mục có chữ nhưng không đạt yêu cầu" mới cần cân nhắc AI.
 
 ### 3.2. Kiểm chứng
 
-Cách đã dùng: Phỏng vấn trực tiếp người thật (The Mom Test) với 5 sinh viên và trợ giảng trong lớp.
+Cách đã dùng: **Phỏng vấn** theo The Mom Test, 5 người (4 sinh viên, 1 trợ giảng); không phỏng vấn thành viên nhóm.
+
+Kịch bản phỏng vấn và bộ câu hỏi survey: [report/assets/cp4-interview-script.md](../assets/cp4-interview-script.md).
 
 #### Interview Snapshot 1
 | Trường | Nội dung |
 |---|---|
 | Người được hỏi (vai trò, không ghi tên thật) | Sinh viên năm 3 ngành CNTT, học viên lớp L3B |
-| Câu nói đáng nhớ nhất (nguyên văn) | *"Hôm nọ nộp bài lúc 23h50, mắt hoa lên nên nhìn tên file 20241234_VuVanAn.md cứ tưởng đúng, hôm sau bị trừ 5 điểm mới biết mình gõ nhầm dấu gạch nối thành gạch dưới, cay cú cả tuần."* |
+| Câu nói đáng nhớ nhất (nguyên văn) | *"Hôm nọ nộp bài lúc 23h50, mắt hoa lên nên nhìn tên file 20241234-VuVanAn.md cứ tưởng đúng, hôm sau bị trừ 5 điểm mới biết mình gõ nhầm dấu gạch dưới thành gạch nối, cay cú cả tuần."* |
 | Lần gần nhất gặp vấn đề này: chuyện gì đã xảy ra? | Bài lab Day 01 tuần trước: mất 35 phút để mở từng folder đối chiếu với file README hướng dẫn trước khi push Git. |
 | Hiện đang xử lý bằng cách nào (workaround)? | Tự mở 2 cửa sổ cạnh nhau (1 bên mở đề, 1 bên mở VS Code) rồi dùng mắt dò từng dòng checklist. |
 | Mất bao lâu, bao lần? | Mất 25–35 phút mỗi bài lab lớn; trung bình 2 tuần làm 1 lần. |
@@ -155,12 +159,12 @@ Cách đã dùng: Phỏng vấn trực tiếp người thật (The Mom Test) v�
 #### Interview Snapshot 4
 | Trường | Nội dung |
 |---|---|
-| Người được hỏi (vai trò, không ghi tên thật) | Sinh viên năm 4 chuẩn bị nộp khóa luận tốt nghiệp |
+| Người được hỏi (vai trò, không ghi tên thật) | Sinh viên năm 4 chuẩn bị nộp khóa luận tốt nghiệp *(ngoài actor chính "sinh viên nộp bài lab"; chỉ dùng insight về ranh giới augment/automate, không tính vào số người xác nhận pain)* |
 | Câu nói đáng nhớ nhất (nguyên văn) | *"Tôi không muốn AI tự động sửa bài của tôi, nó mà sửa nhầm format thì còn tai họa hơn. Tôi chỉ cần nó chỉ ra đúng dòng nào, file nào đang sai để tôi tự sửa."* |
 | Lần gần nhất gặp vấn đề này: chuyện gì đã xảy ra? | Nộp đề cương khóa luận tuần trước: mất 45 phút kiểm tra quy chuẩn trích dẫn và mục lục theo quy định của phòng đào tạo. |
 | Hiện đang xử lý bằng cách nào (workaround)? | In ra giấy hoặc dùng tính năng checklist trong Notion. |
 | Mất bao lâu, bao lần? | 40–50 phút mỗi lần nộp báo cáo lớn. |
-| Insight / opportunity rút ra (TÍN HIỆU PHẢN BÁC QUAN TRỌNG) | **Người dùng muốn hỗ trợ (Augment - chỉ ra lỗi), tuyệt đối không muốn AI tự động sửa đổi file (Automate)** vì rủi ro AI làm hỏng nội dung nguyên bản. |
+| Insight / opportunity rút ra | **Người dùng muốn hỗ trợ (Augment - chỉ ra lỗi), không muốn công cụ tự động sửa file (Automate)** vì sợ làm hỏng nội dung gốc. |
 
 #### Interview Snapshot 5
 | Trường | Nội dung |
@@ -176,21 +180,38 @@ Tổng hợp:
 
 | Nguồn | Số người / số mẫu | Tín hiệu xác nhận | Tín hiệu phản bác |
 |---|---:|---|---|
-| Phỏng vấn The Mom Test | 5 người (4 sinh viên, 1 TA) | 5/5 người xác nhận việc rà soát quy cách nộp bài thủ công tốn 20–45 phút và gây căng thẳng lớn; 4/5 người từng bị trừ điểm hoặc phạt vì lỗi định dạng/thiếu file. | **1 phản bác quan trọng từ SV năm 4:** Sinh viên không muốn công cụ tự ý sửa file bài nộp (Agent tự hành); họ chỉ cần một báo cáo đối chiếu chỉ rõ chỗ sai (Workflow hỗ trợ). |
+| Phỏng vấn The Mom Test | 5 người (3 sinh viên đúng actor, 1 TA, 1 sinh viên khóa luận ngoài actor) | 3/3 sinh viên đúng actor kể lại việc tự rà soát quy cách mất 15–35 phút mỗi lần nộp; TA xác nhận 6/30 bài Day 01 sai quy chuẩn đặt tên file. Lỗi được kể: sai tên file (SV1, TA), mục còn nguyên template (SV3), thiếu file `TEAM.md` (SV5). | **Phản bác 1 (TA):** TA *đã có sẵn bash script* kiểm tên file và gán điểm format → phần kiểm tên file/cấu trúc đã giải được bằng Rule, pain chỉ nằm ở chỗ sinh viên không được chạy script đó trước khi nộp. Điều này làm yếu giả định "Rule không đủ". **Phản bác 2:** 2/3 lỗi sinh viên kể (sai tên, thiếu file) là lỗi Rule bắt được; chỉ lỗi "mục còn nguyên template" là gần ranh giới, và vẫn có thể bắt bằng Rule (tìm chuỗi mẫu của template). **Ranh giới từ SV năm 4:** không muốn công cụ tự sửa file, chỉ cần chỉ ra chỗ sai. |
 
 **Nhóm đã sửa problem thế nào sau kiểm chứng:**
-1. **Thu hẹp ranh giới (Boundary):** Nhóm quyết định công cụ **CHỈ ĐƯỢC PHÉP ĐỌC VÀ BÁO CÁO LỖI (Read-only Report)**, tuyệt đối không tự ý ghi đè hay sửa đổi nội dung file của sinh viên.
-2. **Làm rõ điểm can thiệp AI:** Thay vì dùng AI cho toàn bộ quy trình, nhóm tách bạch:
-   - *Rule-based (Regex/Script):* Kiểm tra tên repo, tên file, cấu trúc cây thư mục (nhanh, chính xác 100%, không tốn chi phí).
-   - *AI (LLM call):* Chỉ dùng để kiểm tra ngữ nghĩa nội dung: phát hiện các mục để trống template, kiểm tra xem mục Success Metric có đủ baseline/target không.
+
+1. **Thu hẹp ranh giới (Boundary):** công cụ **chỉ đọc và báo lỗi (read-only report)**, không ghi đè hay sửa nội dung file của sinh viên.
+2. **Rule trước, AI sau:** vì TA đã kiểm quy cách bằng script và đa số lỗi sinh viên kể là lỗi Rule bắt được, nhóm đặt mặc định là:
+   - *Rule-based (script):* kiểm tên repo, tên file, cấu trúc thư mục, file bắt buộc, và tìm chuỗi template chưa sửa (ví dụ `MSSV_HoTen`, dòng trống sau tiêu đề mục).
+   - *AI (LLM):* chỉ cân nhắc cho phần Rule không bắt được, ví dụ mục Success Metric có chữ nhưng thiếu baseline/target. Có cần mức này hay không để CP6 quyết định, không mặc định là có.
+3. **Sửa metric của card cho thực tế:** bỏ target "0% lỗi" tuyệt đối, đổi thành "số bài nộp bị trừ điểm vì quy cách giảm từ 6/30 (Day 01, theo TA) xuống ≤ 1/30"; bỏ con số "sót lỗi 15%" vì chưa có nguồn; mức "trừ 5–10% điểm" cần trích lại từ `RUBRIC.md` trước CP5.
 
 ### 3.3. Research giải pháp đã có
 
 | Công cụ / case / pattern | Link | Giải bước nào trong quy trình? | Điểm mạnh | Khoảng trống / rủi ro | Bài học cho nhóm |
 |---|---|---|---|---|---|
-| **Gradescope Autograder** | [gradescope.com](https://www.gradescope.com) | Chấm điểm tự động và kiểm tra định dạng bài nộp của sinh viên theo cấu hình của giảng viên | Rất mạnh mẽ, tích hợp sẵn vào LMS trường đại học, chấm code và rubric chuẩn xác | Chỉ giảng viên mới có quyền cài đặt và cấu hình; sinh viên không tự chạy được trước khi nộp; chi phí bản quyền doanh nghiệp đắt | Sinh viên cần một công cụ phía client (chạy cục bộ trên máy hoặc qua GitHub Actions cá nhân) để tự kiểm tra trước khi nộp |
-| **GitHub Super-Linter** | [github.com/super-linter/super-linter](https://github.com/super-linter/super-linter) | Tự động quét và kiểm tra chuẩn định dạng file (Markdown, Python, JSON) qua GitHub Actions | Mã nguồn mở, kiểm tra cú pháp kỹ thuật rất chặt chẽ, chạy tự động mỗi khi push code | Chỉ kiểm tra lỗi cú pháp lập trình (syntax, formatting lint), hoàn toàn không hiểu được rubric ngữ nghĩa của môn học (ví dụ: không biết file `TEAM.md` có đủ 4 thành viên không) | Kết hợp linter cho phần cú pháp, nhưng phải có thêm tầng LLM để hiểu rubric môn học |
-| **Markdownlint CLI** | [github.com/igorshubovych/markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) | Kiểm tra định dạng Markdown theo quy tắc chuẩn | Nhẹ, chạy bằng dòng lệnh cực nhanh, dễ tích hợp | Chỉ bắt lỗi định dạng văn bản (khoảng trắng thừa, tiêu đề sai cấp), không kiểm tra được logic nghiệp vụ của bài nộp | Dùng Markdownlint làm tham khảo cho phần Rule-based kiểm tra cấu trúc tiêu đề |
+| **pre-commit** (sinh viên tự chạy trên máy) | [pre-commit.com](https://pre-commit.com/) | Bước 2 (phần vỏ) và một phần bước 3: hook `fail` chặn file theo tên (*"forbid files by filename"*), hook `pygrep` chặn commit khi nội dung khớp regex (bắt chuỗi template chưa sửa như `MSSV_HoTen`); `pre-commit run --all-files` chạy toàn bộ bằng 1 lệnh | Sinh viên tự chạy **trước khi nộp**, không cần giảng viên; miễn phí, mã nguồn mở; cấu hình viết 1 lần dùng cho cả lớp | Không có sẵn quy tắc "file bắt buộc phải tồn tại", phải tự viết hook cục bộ; không biết mục có chữ đã đạt yêu cầu chưa; mỗi người phải cài Python + pre-commit | Bước 2–3 phần lớn làm được bằng Rule với công cụ có sẵn → mức can thiệp mặc định là Rule, không phải AI |
+| **GitHub Classroom – Autograding** | [docs.github.com – Use autograding](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/use-autograding) | Bước 2–3 (kiểm quy cách): giảng viên cấu hình test, test chạy bằng GitHub Actions **mỗi lần sinh viên push**; sinh viên xem kết quả, sửa rồi push lại | Gần nhất với bài toán: sinh viên thấy lỗi *trước hạn nộp*, không phải sau khi bị chấm; có test preset, không cần biết GitHub Actions | Chỉ chạy khi giảng viên dùng GitHub Classroom và tự viết test; lớp mình nộp bằng repo fork nên hiện không có | Pattern "kiểm tra tự động mỗi lần push" đã có sẵn và chỉ cần Rule → giải pháp hợp lý là một workflow/script kiểm quy cách sinh viên tự chạy, không nhất thiết cần AI |
+| **Gradescope Autograder** | [gradescope.com](https://www.gradescope.com) | Chấm bài nộp dạng giấy, file số và code; có autograder cho bài lập trình | Dùng rộng ở các trường đại học, chấm theo rubric của giảng viên | Do giảng viên cấu hình; phục vụ việc chấm, không phải để sinh viên tự rà soát quy cách trước khi nộp | Công cụ phía giảng viên không giải được bước 2–3 của sinh viên; khoảng trống nằm ở phía người nộp |
+| **markdownlint-cli** | [github.com/igorshubovych/markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) | Kiểm định dạng file Markdown bằng dòng lệnh | Nhẹ, chạy nhanh, dễ tích hợp vào pre-commit | Chỉ bắt lỗi trình bày Markdown (tiêu đề sai cấp, khoảng trắng), không biết mục bắt buộc nào còn để trống | Tham khảo cách chạy cục bộ bằng một lệnh cho phần Rule |
+
+Link đã được nhóm mở và kiểm ngày 09/11/2026 (cả 4 link mở được, nội dung trích khớp với trang).
+
+**Bước 2–3 làm được đến đâu bằng Rule:**
+
+| Việc kiểm | Rule thuần? | Cách làm |
+|---|---|---|
+| Tên file đúng dạng `MSSV_HoTen.md`, cấu trúc thư mục, file bắt buộc (`TEAM.md`, `report/individual/`) | Có | Regex tên file, script kiểm file tồn tại |
+| Tiêu đề/ô thông tin còn nguyên template, ô bảng còn trống | Có | `pygrep`/grep theo chuỗi mẫu, regex ô trống |
+| Mục bắt buộc có tồn tại và không rỗng; Reflection đủ 200 từ | Có | Tách theo tiêu đề `##`, đếm từ |
+| Success Metric có baseline và target thật | Một phần | Regex dạng "số → số" bắt được phần lớn; đánh giá chất lượng cần người đọc |
+| Câu trả lời có đúng câu hỏi hay viết qua loa | Không | Cần đọc hiểu (người hoặc LLM) — đây là chấm nội dung, ngoài phạm vi "quy cách" |
+
+**Kết luận research:** công cụ có sẵn (pre-commit, pattern autograding mỗi lần push) cộng vài script Rule đã giải phần lớn bước 2–3. Khoảng trống còn lại là: (1) lớp không dùng GitHub Classroom nên sinh viên không có sẵn bộ kiểm tra để tự chạy trước khi nộp, và (2) đánh giá chất lượng nội dung của mục bắt buộc. Khoảng trống (2) nằm ngoài phạm vi "quy cách", nên nhóm giữ hướng **Rule trước** và để CP6 quyết định có cần thêm AI hay không.
 
 ---
 
